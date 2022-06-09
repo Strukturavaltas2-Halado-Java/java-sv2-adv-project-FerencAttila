@@ -29,6 +29,7 @@ services:
       SPRING_DATASOURCE_USER: roller
       SPRING_DATASOURCE_PASSWORD: roller
       SPRING_JPA_HIBERNATE_DDL-AUTO: none
+      SPRING_JPA_SHOW-SQL: 1
 
     depends_on:
       - roller-database
