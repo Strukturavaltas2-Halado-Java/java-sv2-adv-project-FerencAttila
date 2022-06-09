@@ -10,6 +10,6 @@ Az alkalmazás két entitást tartalmaz:
 - odú (nestbox): a kihelyezett odúkkal kapcsolatos aktuális információk kezelését valósítja meg.
 - költés (nesting): az egyes odúkban lévő fészkelések adatainak kezeléséért felelős.
 
-![](.\img\roller_nestboxes.jpg "UML diagram of the application")
+![UML diagram of the application](.\img\roller_nestboxes.jpg)
 
 
