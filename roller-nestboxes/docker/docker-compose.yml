@@ -1,0 +1,35 @@
+version: '3.9'
+
+#name: 'roller-nestboxes'
+
+services:
+  roller-database:
+    image: mariadb:10.8
+    container_name: roller_nestboxes_db
+    restart: on-failure
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_DATABASE: roller
+      MYSQL_USER: roller
+      MYSQL_PASSWORD: roller
+      MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'
+
+  roller-app:
+    build:
+      context: ./../
+      dockerfile: ./docker/Dockerfile
+    image: ferencattila/roller
+    container_name: roller_app
+    restart: on-failure
+    ports:
+      - "8080:8080"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mariadb://roller-database:3306/roller
+      SPRING_DATASOURCE_USER: roller
+      SPRING_DATASOURCE_PASSWORD: roller
+      SPRING_JPA_HIBERNATE_DDL-AUTO: none
+
+    depends_on:
+      - roller-database
+    entrypoint: ['/opt/bin/wait-for-it.sh', '-t', '120', 'roller-database:3306', '--', 'java', 'org.springframework.boot.loader.JarLauncher']

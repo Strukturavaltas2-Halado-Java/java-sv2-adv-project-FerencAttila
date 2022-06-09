@@ -1,0 +1,32 @@
+name: Roller Nestboxes CI
+
+on: [push]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v1
+
+      - uses: getong/mariadb-action@v1.1
+        with:
+          character set server: 'utf8'
+          collation server: 'utf8mb4_hungarian_ci'
+          mariadb version: '10.8'
+          mysql database: 'roller'
+          mysql user: 'roller'
+          mysql password: 'roller'
+      - uses: actions/checkout@v3
+      - name: Set up JDK 17
+        uses: actions/setup-java@v3
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+          cache: maven
+      - name: Build with Maven
+        run: mvn verify
+      - uses: actions/upload-artifact@v3
+        with:
+          name: roller-nestboxes-demo
+          path: target/*.jar
