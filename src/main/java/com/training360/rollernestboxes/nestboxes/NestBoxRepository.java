@@ -1,5 +1,6 @@
 package com.training360.rollernestboxes.nestboxes;
 
+import com.training360.rollernestboxes.nestboxes.model.Condition;
 import com.training360.rollernestboxes.nestboxes.model.NestBox;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;

@@ -1,7 +1,5 @@
 package com.training360.rollernestboxes.nestboxes.model;
 
-import com.training360.rollernestboxes.nestboxes.NestBoxType;
-import com.training360.rollernestboxes.nestboxes.Quarter;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

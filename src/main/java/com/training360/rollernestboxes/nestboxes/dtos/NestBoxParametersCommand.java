@@ -1,7 +1,7 @@
 package com.training360.rollernestboxes.nestboxes.dtos;
 
-import com.training360.rollernestboxes.nestboxes.NestBoxType;
-import com.training360.rollernestboxes.nestboxes.Quarter;
+import com.training360.rollernestboxes.nestboxes.model.NestBoxType;
+import com.training360.rollernestboxes.nestboxes.model.Quarter;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Data;

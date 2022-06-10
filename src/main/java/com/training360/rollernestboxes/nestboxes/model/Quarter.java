@@ -1,4 +1,4 @@
-package com.training360.rollernestboxes.nestboxes;
+package com.training360.rollernestboxes.nestboxes.model;
 
 public enum Quarter {
 

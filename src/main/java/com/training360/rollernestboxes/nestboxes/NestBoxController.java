@@ -1,7 +1,10 @@
 package com.training360.rollernestboxes.nestboxes;
 
+import com.training360.rollernestboxes.nestboxes.dtos.ExpireNestBoxCommand;
 import com.training360.rollernestboxes.nestboxes.dtos.NestBoxDto;
 import com.training360.rollernestboxes.nestboxes.dtos.NestBoxPlacementCommand;
+import com.training360.rollernestboxes.nestboxes.dtos.UpdateNestBoxConditionCommand;
+import com.training360.rollernestboxes.nestboxes.model.Condition;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -29,7 +32,7 @@ public class NestBoxController {
 
     @GetMapping(value = "/{nestBoxId}")
     @Operation(description = "Find the nest box by nest box id painted on the nest box")
-    public NestBoxDto findNestBoxById(@PathVariable(value = "nestBoxId") String nestBoxId) {
+    public NestBoxDto findByNestBoxId(@PathVariable(value = "nestBoxId") String nestBoxId) {
         return service.findByNestBoxId(nestBoxId);
     }
 
@@ -45,5 +48,19 @@ public class NestBoxController {
     @Operation(description = "Save a nest box into the database")
     public NestBoxDto saveNestBox(@Valid @RequestBody NestBoxPlacementCommand command) {
         return service.saveNestBox(command);
+    }
+
+    @PutMapping(value = "/{nestBoxId}")
+    @Operation(description = "Update nest box condition by nest box id painted on the nest box")
+    public NestBoxDto updateNestBoxConditionByNestBoxId(
+            @PathVariable(value = "nestBoxId") String nestBoxId,
+            @RequestParam UpdateNestBoxConditionCommand command) {
+        return service.updateNestBoxConditionByNestBoxId(nestBoxId, command);
+    }
+
+    @PutMapping(value = "/expiration")
+    @Operation(description = "Expiration of a nest box")
+    public NestBoxDto expireNestBox(@RequestBody ExpireNestBoxCommand command) {
+        return service.expireNestBox(command);
     }
 }

@@ -7,7 +7,7 @@ import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 import java.util.List;
 
-public class NestBoxIdValidator implements ConstraintValidator<NestBoxId, String> {
+public class NestBoxIdValidator implements ConstraintValidator<ValidateNestBoxId, String> {
 
     private List<String> nestBoxIds;
 
@@ -26,7 +26,7 @@ public class NestBoxIdValidator implements ConstraintValidator<NestBoxId, String
     }
 
     @Override
-    public void initialize(NestBoxId constraintAnnotation) {
+    public void initialize(ValidateNestBoxId constraintAnnotation) {
         this.nestBoxIds = repository.findAll().stream()
                 .map(NestBox::getNestBoxId)
                 .toList();

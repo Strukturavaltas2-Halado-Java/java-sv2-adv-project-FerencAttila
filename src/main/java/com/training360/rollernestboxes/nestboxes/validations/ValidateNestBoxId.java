@@ -10,7 +10,7 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ElementType.FIELD})
 @Constraint(validatedBy = NestBoxIdValidator.class)
-public @interface NestBoxId {
+public @interface ValidateNestBoxId {
 
     String message() default "Nest box id must be unique!";
     Class<?>[] groups() default {};
