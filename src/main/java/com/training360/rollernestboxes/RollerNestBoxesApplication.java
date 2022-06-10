@@ -8,19 +8,19 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
 @SpringBootApplication
-public class RollerNestboxesApplication {
+public class RollerNestBoxesApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(RollerNestboxesApplication.class, args);
+        SpringApplication.run(RollerNestBoxesApplication.class, args);
     }
 
     @Bean
     public OpenAPI createOpenApiUI() {
         return new OpenAPI()
                 .info(new Info()
-                        .title("Roller nestboxes and nestings API")
-                        .version("0.0.1")
-                        .description("OPerations with nestboxes and nestings")
+                        .title("Roller nest boxes and nesting API")
+                        .version("0.0.1-SNAPSHOT")
+                        .description("Operations on nest boxes and nesting")
                         .contact(new Contact().name("Attila Ferenc")));
     }
 }

@@ -1,4 +1,4 @@
-package com.training360.rollernestboxes.nestboxes.entity;
+package com.training360.rollernestboxes.nestboxes.model;
 
 import com.training360.rollernestboxes.nestboxes.NestBoxType;
 import com.training360.rollernestboxes.nestboxes.Quarter;
