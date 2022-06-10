@@ -1,0 +1,12 @@
+GET http://localhost:8080/api/nestboxes
+Accept: application/json
+
+###
+
+POST http://localhost:8080/api/nestboxes
+Content-Type: application/json
+Accept: application/json
+
+{
+
+}

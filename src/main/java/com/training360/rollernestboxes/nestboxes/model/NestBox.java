@@ -46,6 +46,13 @@ public class NestBox {
 
     private String notes;
 
-    //@OneToMany
+    public NestBox(String nestBoxId, NestBoxPlacement nestBoxPlacement, Condition condition, String notes) {
+        this.nestBoxId = nestBoxId;
+        this.nestBoxPlacement = nestBoxPlacement;
+        this.condition = condition;
+        this.notes = notes;
+    }
+
+//@OneToMany
     //private List<Nesting> nesting = new ArrayList<>();
 }
