@@ -1,5 +1,6 @@
-package com.training360.rollernestboxes.nestboxes;
+package com.training360.rollernestboxes.nestboxes.entity;
 
+import com.training360.rollernestboxes.nestboxes.Condition;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 

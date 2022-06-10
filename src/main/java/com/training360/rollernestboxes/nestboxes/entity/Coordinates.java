@@ -1,4 +1,4 @@
-package com.training360.rollernestboxes.nestboxes;
+package com.training360.rollernestboxes.nestboxes.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
