@@ -66,7 +66,7 @@ public class NestBoxService {
     }
 
     private void validateNestBoxExpiration(NestBox nestBox) {
-        if (nestBox.getNestBoxExpiration() != null ||
+        if (nestBox.getNestBoxExpiration() != null &&
         nestBox.getNestBoxExpiration().getDateOfExpiry() != null) {
             throw new NestBoxAlreadyExpiredException(nestBox.getNestBoxId());
         }
