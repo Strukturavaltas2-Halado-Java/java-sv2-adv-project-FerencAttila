@@ -65,6 +65,15 @@ public class NestBoxService {
         return mapper.toNestBoxDto(nestBox);
     }
 
+    public void deleteByNestBoxId(String nestBoxId) {
+        NestBox nestBox = getNestBoxByNestBoxId(nestBoxId);
+        repository.delete(nestBox);
+    }
+
+    public void deleteAll() {
+        repository.deleteAll();
+    }
+
     private void validateNestBoxExpiration(NestBox nestBox) {
         if (nestBox.getNestBoxExpiration() != null &&
         nestBox.getNestBoxExpiration().getDateOfExpiry() != null) {

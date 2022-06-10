@@ -63,4 +63,20 @@ public class NestBoxController {
     public NestBoxDto expireNestBox(@RequestBody ExpireNestBoxCommand command) {
         return service.expireNestBox(command);
     }
+
+    @DeleteMapping(value = "/{nestBoxId}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @ApiResponse(responseCode = "204", description = "Nest box deleted successfully")
+    @Operation(description = "Delete nest box by nest box id painted on the nest box. Use carefully!")
+    public void deleteByNestBoxId(@PathVariable(value = "nestBoxId") String nestBoxId) {
+        service.deleteByNestBoxId(nestBoxId);
+    }
+
+    @DeleteMapping
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @ApiResponse(responseCode = "204", description = "Nest box deleted successfully")
+    @Operation(description = "Delete nest box by nest box id painted on the nest box. Use carefully!")
+    public void deleteAll() {
+        service.deleteAll();
+    }
 }
