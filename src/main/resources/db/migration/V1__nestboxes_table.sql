@@ -6,7 +6,7 @@ create table if not exists
     placement_date        date                      not null,
     eov_x                 integer                   not null,
     eov_y                 integer                   not null,
-    holder                varchar(255),
+    holder                varchar(100),
     height                decimal,
     orientation           varchar(9),
     nest_box_type         varchar(30),

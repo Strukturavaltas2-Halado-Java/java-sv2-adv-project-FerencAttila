@@ -24,6 +24,7 @@ public class ExpireNestBoxCommand {
     private LocalDate date;
 
     @Schema(description = "Cause of destruction", example = "It was dangerous for birds, we took it off")
+    @Size(max = 65535, message = "Expiration description must be consist of maximum 65535 characters!")
     private String description;
 
     @Schema(description = "Reporter of expiration", example = "John Doe")
