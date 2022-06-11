@@ -16,6 +16,6 @@ import javax.validation.constraints.NotBlank;
 public class UpdateNestBoxConditionCommand {
 
     @Schema(description = "Actual condition of the nest box", enumAsRef = true)
-    @NotBlank
+    @NotBlank(message = "Condition be null or empty!")
     private Condition condition;
 }

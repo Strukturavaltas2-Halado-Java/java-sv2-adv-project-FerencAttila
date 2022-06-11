@@ -10,10 +10,10 @@ create table if not exists
     height                decimal,
     orientation           varchar(9),
     nest_box_type         varchar(30),
-    placement_reporter    varchar(255)              not null,
+    placement_reporter    varchar(100)              not null,
     expiry_date           date,
     expiry_desc           text,
-    expiry_reporter       varchar(255),
+    expiry_reporter       varchar(100),
     nest_box_condition    varchar(30)               not null,
     notes                 text,
     primary key (id)
