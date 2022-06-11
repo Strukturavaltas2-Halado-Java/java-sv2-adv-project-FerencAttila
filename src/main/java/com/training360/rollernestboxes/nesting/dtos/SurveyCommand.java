@@ -22,16 +22,19 @@ public class SurveyCommand {
     private String nestBoxId;
 
     @Schema(implementation = CoordinatesCommand.class)
-    private CoordinatesCommand coordinatesCommand;
+    private CoordinatesCommand coordinates;
 
     @Schema(implementation = NestingParametersCommand.class)
-    private NestingParametersCommand nestingParametersCommand;
+    private NestingParametersCommand nestingParameters;
 
     @Schema(description = "Condition of the nest box", enumAsRef = true)
     private Condition condition;
 
     @Schema(description = "Notes on nest box", example = "The lock of the roof must be repaired")
     private String notesOnNestBox;
+
+    @Schema(description = "Notes on nesting", example = "On starling nest base")
+    private String notesOnNesting;
 
     @Schema(description = "Reporter of placement", example = "John Doe")
     @Size(min = 6, max = 100, message = "Person name must be consist of minimum 6 and maximum 100 characters!")

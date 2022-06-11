@@ -29,5 +29,5 @@ public class NestBoxDto {
     private Condition condition;
 
     @Schema(description = "Notes on nest box", example = "In the same tree as the expired 254 nest box")
-    private String notes;
+    private String notesOnNestBox;
 }

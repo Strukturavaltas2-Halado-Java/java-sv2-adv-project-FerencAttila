@@ -2,8 +2,10 @@ package com.training360.rollernestboxes.nestboxes.dtos;
 
 import com.training360.rollernestboxes.nestboxes.validations.ValidateNestBoxIdNotExists;
 import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.PastOrPresent;
@@ -11,7 +13,9 @@ import javax.validation.constraints.Size;
 import java.time.LocalDate;
 
 @Getter
+@Setter
 @NoArgsConstructor
+@AllArgsConstructor
 public class ExpireNestBoxCommand {
 
     @Schema(description = "Unique nest box id, painted on the box", example = "1487/B")

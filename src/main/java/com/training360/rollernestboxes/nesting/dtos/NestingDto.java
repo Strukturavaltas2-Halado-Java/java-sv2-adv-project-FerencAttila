@@ -22,7 +22,7 @@ public class NestingDto {
     private NestingParametersDto nestingParameters;
 
     @Schema(description = "Notes on nesting", example = "On starling nest base")
-    private String notes;
+    private String notesOnNesting;
 
     @Schema(description = "Reporter of nesting", example = "John Doe")
     private String observer;

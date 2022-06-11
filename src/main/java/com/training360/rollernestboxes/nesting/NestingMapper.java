@@ -1,23 +1,26 @@
 package com.training360.rollernestboxes.nesting;
 
+import com.training360.rollernestboxes.nestboxes.model.NestBox;
 import com.training360.rollernestboxes.nesting.dtos.*;
 import com.training360.rollernestboxes.nesting.model.Mortality;
 import com.training360.rollernestboxes.nesting.model.Nesting;
 import com.training360.rollernestboxes.nesting.model.NestingParameters;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 
 @Mapper(componentModel = "spring")
 public interface NestingMapper {
 
-    NestingDto toNestingDto (Nesting nesting);
-
-    NestingParametersDto toNestingParametersDto (NestingParameters nestingParameters);
-
-    MortalityDto toMortalityDto (Mortality mortality);
-
-    NestingParameters toNestingParameters(NestingParametersCommand nestingParametersCommand);
+    MortalityDto toMortalityDto(Mortality mortality);
 
     Mortality toMortality(MortalityCommand mortalityCommand);
 
-    SurveyDto toSurveyDto(Nesting nesting);
+    NestingParametersDto toNestingParametersDto(NestingParameters nestingParameters);
+
+    NestingParameters toNestingParameters(NestingParametersCommand nestingParametersCommand);
+
+    SurveyDto toSurveyDto(NestBox nestBox, Nesting nesting);
+
+    @Mapping(target = "nestBoxId", source = "nestBox.nestBoxId")
+    NestingDto toNestingDto(Nesting nesting);
 }

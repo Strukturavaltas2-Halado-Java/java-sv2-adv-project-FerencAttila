@@ -40,5 +40,5 @@ public class NestingParametersCommand {
     private String ageOfNestlings;
 
     @Schema(implementation = MortalityCommand.class)
-    private MortalityCommand mortalityCommand;
+    private MortalityCommand mortality;
 }

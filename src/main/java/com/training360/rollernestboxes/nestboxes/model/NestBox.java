@@ -47,16 +47,17 @@ public class NestBox {
     @Enumerated(value = EnumType.STRING)
     private Condition condition;
 
-    private String notes;
+    @Column(name = "notes")
+    private String notesOnNestBox;
 
     @OneToMany(mappedBy = "nestBox", orphanRemoval = true)
     private List<Nesting> nesting = new ArrayList<>();
 
-    public NestBox(String nestBoxId, NestBoxPlacement nestBoxPlacement, Condition condition, String notes) {
+    public NestBox(String nestBoxId, NestBoxPlacement nestBoxPlacement, Condition condition, String notesOnNestBox) {
         this.nestBoxId = nestBoxId;
         this.nestBoxPlacement = nestBoxPlacement;
         this.condition = condition;
-        this.notes = notes;
+        this.notesOnNestBox = notesOnNestBox;
     }
 
     public void addNesting(Nesting nesting) {

@@ -30,7 +30,7 @@ public class NestingController {
         return service.findAllNesting(year, species);
     }
 
-    @GetMapping(value = "/nestbox")
+    @GetMapping(value = "/nest-box")
     @Operation(description = "Find all nesting of a given nest box")
     public List<NestingDto> findAllNestingByNestBoxId(@RequestParam String nestBoxId) {
         return service.findAllNestingByNestBoxId(nestBoxId);
@@ -39,15 +39,15 @@ public class NestingController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     @ApiResponse(responseCode = "201", description = "Nesting saved successfully")
-    @Operation(description = "Save a nesting by field survey")
+    @Operation(description = "Save a nesting and update nest box properties by field survey")
     public SurveyDto saveNestingBySurvey(@Valid @RequestBody SurveyCommand command) {
         return service.saveNestingBySurvey(command);
     }
 
     @PutMapping(value = "/{id}")
-    @Operation(description = "Update nesting notes by nesting's database id")
-    public NestingDto updateNestingById(@PathVariable(value= "id") long id, @Valid @RequestBody UpdateNestingCommand command) {
-        return service.updateNestingById(id, command);
+    @Operation(description = "Concatenate new nesting notes by nesting's database id")
+    public NestingDto addNestingNotesById(@PathVariable(value= "id") long id, @Valid @RequestBody UpdateNestingCommand command) {
+        return service.addNestingNotesById(id, command);
     }
 
     @DeleteMapping(value = "/{id}")

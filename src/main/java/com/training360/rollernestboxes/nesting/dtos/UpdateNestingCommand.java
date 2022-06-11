@@ -13,5 +13,5 @@ import lombok.Setter;
 public class UpdateNestingCommand {
 
     @Schema(description = "Notes on nesting", example = "On starling nest base")
-    private String notes;
+    private String notesOnNesting;
 }

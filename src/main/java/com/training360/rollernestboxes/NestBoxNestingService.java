@@ -107,12 +107,13 @@ public class NestBoxNestingService {
         Nesting nesting = createNestingBySurvey(command, nestBox);
         nestingRepository.save(nesting);
         nestBox.addNesting(nesting);
-        return nestingMapper.toSurveyDto(nesting);
+        return nestingMapper.toSurveyDto(nestBox, nesting);
     }
 
-    public NestingDto updateNestingById(long id, UpdateNestingCommand command) {
+    public NestingDto addNestingNotesById(long id, UpdateNestingCommand command) {
         Nesting nesting = getNestingById(id);
-        nesting.setNotes(command.getNotes());
+        String oldNotes = nesting.getNotesOnNesting();
+        nesting.setNotesOnNesting(String.join(" ", oldNotes, command.getNotesOnNesting()));
         return nestingMapper.toNestingDto(nesting);
     }
 
@@ -129,19 +130,30 @@ public class NestBoxNestingService {
     private NestBox updateNestBoxBySurvey(SurveyCommand command) {
         NestBox nestBox = getNestBoxByNestBoxId(command.getNestBoxId());
         validateSurveyDate(nestBox, command);
-        if (command.getCondition() != null) {
-            validateAndSetNestBoxCondition(nestBox, command.getCondition());
-        }
+        updateNestBoxConditionBySurvey(command, nestBox);
+        updateNestBoxNotesBySurvey(command, nestBox);
         return nestBox;
     }
 
+    private void updateNestBoxConditionBySurvey(SurveyCommand command, NestBox nestBox) {
+        if (command.getCondition() != null) {
+            validateAndSetNestBoxCondition(nestBox, command.getCondition());
+        }
+    }
+
+    private void updateNestBoxNotesBySurvey(SurveyCommand command, NestBox nestBox) {
+        if (command.getNotesOnNestBox() != null) {
+            nestBox.setNotesOnNestBox(String.join(" ", nestBox.getNotesOnNestBox(), command.getNotesOnNestBox()));
+        }
+    }
+
     private void validateSurveyDate(NestBox nestBox, SurveyCommand command) {
-        if (command.getNestingParametersCommand().getDateOfSurvey().isBefore(nestBox.getNestBoxPlacement().getDateOfPlacement())) {
-            throw new InvalidSurveyDateException(command.getNestingParametersCommand().getDateOfSurvey(), "before");
+        if (command.getNestingParameters().getDateOfSurvey().isBefore(nestBox.getNestBoxPlacement().getDateOfPlacement())) {
+            throw new InvalidSurveyDateException(command.getNestingParameters().getDateOfSurvey(), "before");
         }
         if (nestBox.getNestBoxExpiration() != null
-                && command.getNestingParametersCommand().getDateOfSurvey().isAfter(nestBox.getNestBoxExpiration().getDateOfExpiry())) {
-            throw new InvalidSurveyDateException(command.getNestingParametersCommand().getDateOfSurvey(), "after");
+                && command.getNestingParameters().getDateOfSurvey().isAfter(nestBox.getNestBoxExpiration().getDateOfExpiry())) {
+            throw new InvalidSurveyDateException(command.getNestingParameters().getDateOfSurvey(), "after");
         }
     }
 
@@ -196,8 +208,8 @@ public class NestBoxNestingService {
 
     private Nesting createNestingBySurvey(SurveyCommand command, NestBox nestBox) {
         return new Nesting(nestBox,
-                nestingMapper.toNestingParameters(command.getNestingParametersCommand()),
-                command.getNotesOnNestBox(),
+                nestingMapper.toNestingParameters(command.getNestingParameters()),
+                command.getNotesOnNesting(),
                 command.getObserver());
     }
 

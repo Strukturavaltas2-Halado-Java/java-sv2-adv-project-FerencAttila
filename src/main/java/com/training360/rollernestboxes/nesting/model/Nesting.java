@@ -36,14 +36,15 @@ public class Nesting {
     @AttributeOverride(name = "mortality.description", column = @Column(name = "mortality_desc"))
     private NestingParameters nestingParameters;
 
-    private String notes;
+    @Column(name = "notes")
+    private String notesOnNesting;
 
     private String observer;
 
-    public Nesting(NestBox nestBox, NestingParameters nestingParameters, String notes, String observer) {
+    public Nesting(NestBox nestBox, NestingParameters nestingParameters, String notesOnNesting, String observer) {
         this.nestBox = nestBox;
         this.nestingParameters = nestingParameters;
-        this.notes = notes;
+        this.notesOnNesting = notesOnNesting;
         this.observer = observer;
     }
 }
