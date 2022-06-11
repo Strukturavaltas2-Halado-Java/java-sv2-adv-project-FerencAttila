@@ -20,11 +20,14 @@ public class NestBoxDto {
     private String nestBoxId;
 
     @Schema(implementation = NestBoxPlacementDto.class)
-    private NestBoxPlacementDto nestBoxPlacementDto;
+    private NestBoxPlacementDto nestBoxPlacement;
 
     @Schema(implementation = NestBoxExpirationDto.class)
-    private NestBoxExpirationDto nestBoxExpirationDto;
+    private NestBoxExpirationDto nestBoxExpiration;
 
     @Schema(description = "Actual condition of the nest box", enumAsRef = true)
     private Condition condition;
+
+    @Schema(description = "Notes on nest box", example = "In the same tree as the expired 254 nest box")
+    private String notes;
 }

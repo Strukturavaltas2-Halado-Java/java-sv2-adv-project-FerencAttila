@@ -15,7 +15,7 @@ import lombok.Setter;
 public class NestBoxParametersDto {
 
     @Schema(implementation = CoordinatesDto.class)
-    private CoordinatesDto coordinatesDto;
+    private CoordinatesDto coordinates;
 
     @Schema(description = "The holder of the nest box", example = "Quercus robur")
     private String holder;
@@ -28,7 +28,4 @@ public class NestBoxParametersDto {
 
     @Schema(description = "Type of nest box", enumAsRef = true)
     private NestBoxType nestBoxType;
-
-    @Schema(description = "Notes on nest box or placement", example = "Some sample notes")
-    private String notes;
 }

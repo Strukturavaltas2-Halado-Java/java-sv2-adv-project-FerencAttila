@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.Embeddable;
+import java.time.LocalDate;
 
 @Data
 @NoArgsConstructor
@@ -12,7 +13,7 @@ import javax.persistence.Embeddable;
 @Embeddable
 public class NestBoxExpiration {
 
-    private String dateOfExpiry;
+    private LocalDate dateOfExpiry;
 
     private String descriptionOfExpiry;
 

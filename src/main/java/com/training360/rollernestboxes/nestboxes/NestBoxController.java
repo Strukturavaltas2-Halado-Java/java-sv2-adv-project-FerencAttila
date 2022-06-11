@@ -19,25 +19,25 @@ import java.util.Optional;
 
 @AllArgsConstructor
 @RestController
-@RequestMapping(value = "/api/nest-boxes")
+@RequestMapping(value = "/api/nest-box-management")
 @Tag(name = "Operations on nest boxes")
 public class NestBoxController {
 
     private NestBoxNestingService service;
 
-    @GetMapping
+    @GetMapping(value = "/nest-boxes")
     @Operation(description = "List all nest boxes or nest boxes in given condition.")
     public List<NestBoxDto> findNestBoxes(@RequestParam Optional<Condition> condition) {
         return service.findAllNestBoxes(condition);
     }
 
-    @GetMapping(value = "/{nestBoxId}")
+    @GetMapping
     @Operation(description = "Find the nest box by nest box id painted on the nest box")
-    public NestBoxDto findByNestBoxId(@PathVariable(value = "nestBoxId") String nestBoxId) {
+    public NestBoxDto findByNestBoxId(@RequestParam(value = "nestBoxId") String nestBoxId) {
         return service.findByNestBoxId(nestBoxId);
     }
 
-    @GetMapping(path = "/isLiving")
+    @GetMapping(path = "/living-nest-boxes")
     @Operation(description = "List all living nest boxes")
     public List<NestBoxDto> findAllLivingNestBoxes() {
         return service.findAllLivingNestBoxes();
@@ -51,33 +51,31 @@ public class NestBoxController {
         return service.saveNestBox(command);
     }
 
-    @PutMapping(value = "/{nestBoxId}")
+    @PutMapping
     @Operation(description = "Update nest box condition by nest box id painted on the nest box")
-    public NestBoxDto updateNestBoxConditionByNestBoxId(
-            @PathVariable(value = "nestBoxId") String nestBoxId,
-            @RequestParam UpdateNestBoxConditionCommand command) {
-        return service.updateNestBoxConditionByNestBoxId(nestBoxId, command);
+    public NestBoxDto updateNestBoxConditionByNestBoxId(@RequestBody UpdateNestBoxConditionCommand command) {
+        return service.updateNestBoxConditionByNestBoxId(command);
     }
 
     @PutMapping(value = "/expiration")
-    @Operation(description = "Expiration of a nest box")
+    @Operation(description = "Set a nest box as demolished")
     public NestBoxDto expireNestBox(@RequestBody ExpireNestBoxCommand command) {
         return service.expireNestBox(command);
-    }
-
-    @DeleteMapping(value = "/{nestBoxId}")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    @ApiResponse(responseCode = "204", description = "Nest box deleted successfully")
-    @Operation(description = "Delete nest box by nest box id painted on the nest box. Use carefully!")
-    public void deleteByNestBoxId(@PathVariable(value = "nestBoxId") String nestBoxId) {
-        service.deleteByNestBoxId(nestBoxId);
     }
 
     @DeleteMapping
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @ApiResponse(responseCode = "204", description = "Nest box deleted successfully")
     @Operation(description = "Delete nest box by nest box id painted on the nest box. Use carefully!")
+    public void deleteByNestBoxId(@RequestParam(value = "nestBoxId") String nestBoxId) {
+        service.deleteByNestBoxId(nestBoxId);
+    }
+
+    @DeleteMapping("/nest-boxes")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @ApiResponse(responseCode = "204", description = "Nest box deleted successfully")
+    @Operation(description = "Delete nest box by nest box id painted on the nest box. Use carefully!")
     public void deleteAll() {
-        service.deleteAll();
+        service.deleteAllNestBoxes();
     }
 }

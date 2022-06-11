@@ -1,8 +1,6 @@
 package com.training360.rollernestboxes.nesting;
 
-import com.training360.rollernestboxes.nesting.dtos.MortalityDto;
-import com.training360.rollernestboxes.nesting.dtos.NestingDto;
-import com.training360.rollernestboxes.nesting.dtos.NestingParametersDto;
+import com.training360.rollernestboxes.nesting.dtos.*;
 import com.training360.rollernestboxes.nesting.model.Mortality;
 import com.training360.rollernestboxes.nesting.model.Nesting;
 import com.training360.rollernestboxes.nesting.model.NestingParameters;
@@ -16,4 +14,10 @@ public interface NestingMapper {
     NestingParametersDto toNestingParametersDto (NestingParameters nestingParameters);
 
     MortalityDto toMortalityDto (Mortality mortality);
+
+    NestingParameters toNestingParameters(NestingParametersCommand nestingParametersCommand);
+
+    Mortality toMortality(MortalityCommand mortalityCommand);
+
+    SurveyDto toSurveyDto(Nesting nesting);
 }

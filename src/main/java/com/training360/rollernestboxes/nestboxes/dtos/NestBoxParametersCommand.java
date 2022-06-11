@@ -2,6 +2,7 @@ package com.training360.rollernestboxes.nestboxes.dtos;
 
 import com.training360.rollernestboxes.nestboxes.model.NestBoxType;
 import com.training360.rollernestboxes.nestboxes.model.Quarter;
+import com.training360.rollernestboxes.nestboxes.validations.ValidateValueOfEnum;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -27,8 +28,10 @@ public class NestBoxParametersCommand {
     private double height;
 
     @Schema(description = "Orientation as quarter", enumAsRef = true)
+    @ValidateValueOfEnum(enumClass = Quarter.class)
     private Quarter orientation;
 
+    @ValidateValueOfEnum(enumClass = NestBoxType.class)
     @Schema(description = "Type of nest box", enumAsRef = true)
     private NestBoxType nestBoxType;
 

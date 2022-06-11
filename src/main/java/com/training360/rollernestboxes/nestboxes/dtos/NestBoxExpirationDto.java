@@ -15,11 +15,11 @@ import java.time.LocalDate;
 public class NestBoxExpirationDto {
 
     @Schema(description = "First known date, when the nest box was demolished")
-    private LocalDate date;
+    private LocalDate dateOfExpiry;
 
     @Schema(description = "Cause of destruction", example = "It was dangerous for birds, we took it off")
-    private String description;
+    private String descriptionOfExpiry;
 
     @Schema(description = "Reporter of expiration", example = "John Doe")
-    private String reporter;
+    private String reporterOfExpiry;
 }

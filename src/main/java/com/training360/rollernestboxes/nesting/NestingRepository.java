@@ -12,4 +12,13 @@ public interface NestingRepository extends JpaRepository<Nesting, Long> {
 
     @Query(value = "select n from Nesting n where year(n.nestingParameters.dateOfSurvey) = :year")
     List<Nesting> findAllByYear(int year);
+
+    @Query(value = "select n from Nesting n where n.nestingParameters.nestingSpecies = :species")
+    List<Nesting> findAllBySpecies(String species);
+
+    @Query(value = "select n from Nesting n where year(n.nestingParameters.dateOfSurvey) = :year and n.nestingParameters.nestingSpecies = :species")
+    List<Nesting> findAllByYearAndSpecies(int year, String species);
+
+    @Query(value = "select n from Nesting n where n.nestBox.nestBoxId = :nestBoxId")
+    List<Nesting> findAllByNestBoxId(String nestBoxId);
 }

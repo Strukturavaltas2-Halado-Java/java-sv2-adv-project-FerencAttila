@@ -13,6 +13,12 @@ import com.training360.rollernestboxes.nestboxes.model.*;
 import com.training360.rollernestboxes.nesting.NestingMapper;
 import com.training360.rollernestboxes.nesting.NestingRepository;
 import com.training360.rollernestboxes.nesting.dtos.NestingDto;
+import com.training360.rollernestboxes.nesting.dtos.SurveyCommand;
+import com.training360.rollernestboxes.nesting.dtos.SurveyDto;
+import com.training360.rollernestboxes.nesting.dtos.UpdateNestingCommand;
+import com.training360.rollernestboxes.nesting.exceptions.InvalidSurveyDateException;
+import com.training360.rollernestboxes.nesting.exceptions.NestingNotFoundException;
+import com.training360.rollernestboxes.nesting.model.Nesting;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -58,18 +64,19 @@ public class NestBoxNestingService {
         return nestBoxMapper.toNestBoxDto(nestBox);
     }
 
-    public NestBoxDto updateNestBoxConditionByNestBoxId(String nestBoxId, UpdateNestBoxConditionCommand command) {
-        NestBox nestBox = getNestBoxByNestBoxId(nestBoxId);
-        validateNestBoxCondition(nestBox, command.getCondition());
-        nestBox.setCondition(command.getCondition());
+    public NestBoxDto updateNestBoxConditionByNestBoxId(UpdateNestBoxConditionCommand command) {
+        NestBox nestBox = getNestBoxByNestBoxId(command.getNestBoxId());
+        validateAndSetNestBoxCondition(nestBox, command.getCondition());
         return nestBoxMapper.toNestBoxDto(nestBox);
     }
 
     public NestBoxDto expireNestBox(ExpireNestBoxCommand command) {
         NestBox nestBox = getNestBoxByNestBoxId(command.getNestBoxId());
-        validateNestBoxExpiration(nestBox);
-        nestBox.setNestBoxExpiration(new NestBoxExpiration(command.getNestBoxId(),
-                command.getDescription(), command.getReporter()));
+        validateNestBoxExpirationIsNotExists(nestBox);
+        nestBox.setNestBoxExpiration(new NestBoxExpiration(
+                command.getDateOfExpiry(),
+                command.getDescriptionOfExpiry(),
+                command.getReporterOfExpiry()));
         nestBox.setCondition(Condition.EXPIRED);
         return nestBoxMapper.toNestBoxDto(nestBox);
     }
@@ -79,20 +86,80 @@ public class NestBoxNestingService {
         nestBoxRepository.delete(nestBox);
     }
 
-    public void deleteAll() {
+    public void deleteAllNestBoxes() {
         nestBoxRepository.deleteAll();
     }
 
-    public List<NestingDto> findAllNesting(Optional<Integer> year) {
-        return year.map(value -> nestingRepository.findAllByYear(value).stream()
-                        .map(nesting -> nestingMapper.toNestingDto(nesting))
-                        .toList())
-                .orElseGet(() -> nestingRepository.findAll().stream()
-                        .map(nesting -> nestingMapper.toNestingDto(nesting))
-                        .toList());
+    public List<NestingDto> findAllNesting(Optional<Integer> year, Optional<String> species) {
+        return getNestingByFilterValues(year, species).stream()
+                .map(n -> nestingMapper.toNestingDto(n))
+                .toList();
     }
 
-    private void validateNestBoxExpiration(NestBox nestBox) {
+    public List<NestingDto> findAllNestingByNestBoxId(String nestBoxId) {
+        return nestingRepository.findAllByNestBoxId(nestBoxId).stream()
+                .map(nesting -> nestingMapper.toNestingDto(nesting))
+                .toList();
+    }
+
+    public SurveyDto saveNestingBySurvey(SurveyCommand command) {
+        NestBox nestBox = updateNestBoxBySurvey(command);
+        Nesting nesting = createNestingBySurvey(command, nestBox);
+        nestingRepository.save(nesting);
+        nestBox.addNesting(nesting);
+        return nestingMapper.toSurveyDto(nesting);
+    }
+
+    public NestingDto updateNestingById(long id, UpdateNestingCommand command) {
+        Nesting nesting = getNestingById(id);
+        nesting.setNotes(command.getNotes());
+        return nestingMapper.toNestingDto(nesting);
+    }
+
+    public void deleteNestingById(long id) {
+        Nesting nesting = getNestingById(id);
+        nestingRepository.delete(nesting);
+    }
+
+    private void validateAndSetNestBoxCondition(NestBox nestBox, Condition condition) {
+        validateNestBoxCondition(nestBox, condition);
+        nestBox.setCondition(condition);
+    }
+
+    private NestBox updateNestBoxBySurvey(SurveyCommand command) {
+        NestBox nestBox = getNestBoxByNestBoxId(command.getNestBoxId());
+        validateSurveyDate(nestBox, command);
+        if (command.getCondition() != null) {
+            validateAndSetNestBoxCondition(nestBox, command.getCondition());
+        }
+        return nestBox;
+    }
+
+    private void validateSurveyDate(NestBox nestBox, SurveyCommand command) {
+        if (command.getNestingParametersCommand().getDateOfSurvey().isBefore(nestBox.getNestBoxPlacement().getDateOfPlacement())) {
+            throw new InvalidSurveyDateException(command.getNestingParametersCommand().getDateOfSurvey(), "before");
+        }
+        if (nestBox.getNestBoxExpiration() != null
+                && command.getNestingParametersCommand().getDateOfSurvey().isAfter(nestBox.getNestBoxExpiration().getDateOfExpiry())) {
+            throw new InvalidSurveyDateException(command.getNestingParametersCommand().getDateOfSurvey(), "after");
+        }
+    }
+
+    private List<Nesting> getNestingByFilterValues(Optional<Integer> year, Optional<String> species) {
+        List<Nesting> nesting;
+        if (year.isPresent() && species.isPresent()) {
+            nesting = nestingRepository.findAllByYearAndSpecies(year.get(), species.get());
+        } else if (year.isPresent()) {
+            nesting = nestingRepository.findAllByYear(year.get());
+        } else if (species.isPresent()) {
+            nesting = nestingRepository.findAllBySpecies(species.get());
+        } else {
+            nesting = nestingRepository.findAll();
+        }
+        return nesting;
+    }
+
+    private void validateNestBoxExpirationIsNotExists(NestBox nestBox) {
         if (nestBox.getNestBoxExpiration() != null &&
                 nestBox.getNestBoxExpiration().getDateOfExpiry() != null) {
             throw new NestBoxAlreadyExpiredException(nestBox.getNestBoxId());
@@ -100,17 +167,10 @@ public class NestBoxNestingService {
     }
 
     private void validateNestBoxCondition(NestBox nestBox, Condition condition) {
-        if (nestBox.getNestBoxExpiration().getDateOfExpiry() == null && condition == Condition.EXPIRED) {
+        if (condition == Condition.EXPIRED && nestBox.getNestBoxExpiration() == null ||
+                condition != Condition.EXPIRED && nestBox.getNestBoxExpiration() != null) {
             throw new InvalidConditionException();
         }
-        if (nestBox.getNestBoxExpiration().getDateOfExpiry() != null && condition != Condition.EXPIRED) {
-            throw new InvalidConditionException();
-        }
-    }
-
-    private NestBox getNestBoxByNestBoxId(String nestBoxId) {
-        return nestBoxRepository.findByNestBoxIdIgnoreCase(nestBoxId)
-                .orElseThrow(() -> new NestBoxNotFoundException(nestBoxId));
     }
 
     private NestBox createNestBoxByNewPlacement(NestBoxPlacementCommand command) {
@@ -127,5 +187,22 @@ public class NestBoxNestingService {
                         command.getReporterOfPlacement()),
                 Condition.GOOD,
                 command.getNestBoxParametersCommand().getNotes());
+    }
+
+    private NestBox getNestBoxByNestBoxId(String nestBoxId) {
+        return nestBoxRepository.findByNestBoxIdIgnoreCase(nestBoxId)
+                .orElseThrow(() -> new NestBoxNotFoundException(nestBoxId));
+    }
+
+    private Nesting createNestingBySurvey(SurveyCommand command, NestBox nestBox) {
+        return new Nesting(nestBox,
+                nestingMapper.toNestingParameters(command.getNestingParametersCommand()),
+                command.getNotesOnNestBox(),
+                command.getObserver());
+    }
+
+    private Nesting getNestingById(long id) {
+        return nestingRepository.findById(id)
+                .orElseThrow(() -> new NestingNotFoundException(id));
     }
 }

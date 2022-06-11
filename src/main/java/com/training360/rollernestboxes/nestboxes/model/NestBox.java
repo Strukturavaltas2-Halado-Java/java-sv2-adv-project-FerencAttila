@@ -1,11 +1,15 @@
 package com.training360.rollernestboxes.nestboxes.model;
 
+import com.training360.rollernestboxes.nesting.exceptions.NestingNotFoundException;
+import com.training360.rollernestboxes.nesting.model.Nesting;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Setter
@@ -45,6 +49,9 @@ public class NestBox {
 
     private String notes;
 
+    @OneToMany(mappedBy = "nestBox", orphanRemoval = true)
+    private List<Nesting> nesting = new ArrayList<>();
+
     public NestBox(String nestBoxId, NestBoxPlacement nestBoxPlacement, Condition condition, String notes) {
         this.nestBoxId = nestBoxId;
         this.nestBoxPlacement = nestBoxPlacement;
@@ -52,6 +59,15 @@ public class NestBox {
         this.notes = notes;
     }
 
-//@OneToMany
-    //private List<Nesting> nesting = new ArrayList<>();
+    public void addNesting(Nesting nesting) {
+        this.nesting.add(nesting);
+    }
+
+    public void removeNesting(long nestingId) {
+        Nesting actual = this.nesting.stream()
+                .filter(n -> n.getId() == nestingId)
+                .findFirst()
+                .orElseThrow(() -> new NestingNotFoundException(nestingId));
+        this.nesting.remove(actual);
+    }
 }

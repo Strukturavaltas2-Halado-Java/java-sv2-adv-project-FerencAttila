@@ -6,6 +6,7 @@ import org.zalando.problem.Status;
 import java.net.URI;
 
 public class NestBoxAlreadyExpiredException extends AbstractThrowableProblem {
+
     public NestBoxAlreadyExpiredException(String nestBoxId) {
         super(URI.create("nest-boxes/nest-box-already-expired"),
                 "Nest box already expired",

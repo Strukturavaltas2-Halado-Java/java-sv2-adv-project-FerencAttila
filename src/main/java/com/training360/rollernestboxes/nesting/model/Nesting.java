@@ -21,6 +21,7 @@ public class Nesting {
     private Long id;
 
     @ManyToOne
+    @JoinColumn(name = "box_id")
     private NestBox nestBox;
 
     @Embedded
@@ -38,4 +39,11 @@ public class Nesting {
     private String notes;
 
     private String observer;
+
+    public Nesting(NestBox nestBox, NestingParameters nestingParameters, String notes, String observer) {
+        this.nestBox = nestBox;
+        this.nestingParameters = nestingParameters;
+        this.notes = notes;
+        this.observer = observer;
+    }
 }

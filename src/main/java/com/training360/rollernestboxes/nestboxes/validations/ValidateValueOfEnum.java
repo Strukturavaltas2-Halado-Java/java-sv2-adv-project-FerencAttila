@@ -9,10 +9,11 @@ import java.lang.annotation.Target;
 
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ElementType.FIELD})
-@Constraint(validatedBy = NestBoxIdValidator.class)
-public @interface ValidateNestBoxId {
+@Constraint(validatedBy = ValueOfEnumValidator.class)
+public @interface ValidateValueOfEnum {
 
-    String message() default "Nest box id must be unique!";
+    Class<? extends Enum<?>> enumClass();
+    String message() default "Value must be any of enum {enumClass}";
     Class<?>[] groups() default {};
     Class<? extends Payload>[] payload() default {};
 }
