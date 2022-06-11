@@ -1,5 +1,7 @@
-package com.training360.rollernestboxes.nestboxes;
+package com.training360.rollernestboxes;
 
+import com.training360.rollernestboxes.nestboxes.NestBoxMapper;
+import com.training360.rollernestboxes.nestboxes.NestBoxRepository;
 import com.training360.rollernestboxes.nestboxes.dtos.ExpireNestBoxCommand;
 import com.training360.rollernestboxes.nestboxes.dtos.NestBoxDto;
 import com.training360.rollernestboxes.nestboxes.dtos.NestBoxPlacementCommand;
@@ -8,6 +10,9 @@ import com.training360.rollernestboxes.nestboxes.exceptions.InvalidConditionExce
 import com.training360.rollernestboxes.nestboxes.exceptions.NestBoxAlreadyExpiredException;
 import com.training360.rollernestboxes.nestboxes.exceptions.NestBoxNotFoundException;
 import com.training360.rollernestboxes.nestboxes.model.*;
+import com.training360.rollernestboxes.nesting.NestingMapper;
+import com.training360.rollernestboxes.nesting.NestingRepository;
+import com.training360.rollernestboxes.nesting.dtos.NestingDto;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -18,42 +23,46 @@ import java.util.Optional;
 @AllArgsConstructor
 @Service
 @Transactional
-public class NestBoxService {
+public class NestBoxNestingService {
 
-    private NestBoxRepository repository;
+    private NestBoxRepository nestBoxRepository;
 
-    private NestBoxMapper mapper;
+    private NestingRepository nestingRepository;
+
+    private NestBoxMapper nestBoxMapper;
+
+    private NestingMapper nestingMapper;
 
     public List<NestBoxDto> findAllNestBoxes(Optional<Condition> condition) {
-        return condition.map(value -> repository.findAllByConditionIs(value).stream()
-                        .map(nestBox -> mapper.toNestBoxDto(nestBox))
+        return condition.map(value -> nestBoxRepository.findAllByConditionIs(value).stream()
+                        .map(nestBox -> nestBoxMapper.toNestBoxDto(nestBox))
                         .toList())
-                .orElseGet(() -> repository.findAll().stream()
-                        .map(nestBox -> mapper.toNestBoxDto(nestBox))
+                .orElseGet(() -> nestBoxRepository.findAll().stream()
+                        .map(nestBox -> nestBoxMapper.toNestBoxDto(nestBox))
                         .toList());
     }
 
     public NestBoxDto findByNestBoxId(String nestBoxId) {
-        return mapper.toNestBoxDto(getNestBoxByNestBoxId(nestBoxId));
+        return nestBoxMapper.toNestBoxDto(getNestBoxByNestBoxId(nestBoxId));
     }
 
     public List<NestBoxDto> findAllLivingNestBoxes() {
-        return repository.findAllByConditionIsNot(Condition.EXPIRED).stream()
-                .map(nestBox -> mapper.toNestBoxDto(nestBox))
+        return nestBoxRepository.findAllByConditionIsNot(Condition.EXPIRED).stream()
+                .map(nestBox -> nestBoxMapper.toNestBoxDto(nestBox))
                 .toList();
     }
 
     public NestBoxDto saveNestBox(NestBoxPlacementCommand command) {
         NestBox nestBox = createNestBoxByNewPlacement(command);
-        repository.save(nestBox);
-        return mapper.toNestBoxDto(nestBox);
+        nestBoxRepository.save(nestBox);
+        return nestBoxMapper.toNestBoxDto(nestBox);
     }
 
     public NestBoxDto updateNestBoxConditionByNestBoxId(String nestBoxId, UpdateNestBoxConditionCommand command) {
         NestBox nestBox = getNestBoxByNestBoxId(nestBoxId);
         validateNestBoxCondition(nestBox, command.getCondition());
         nestBox.setCondition(command.getCondition());
-        return mapper.toNestBoxDto(nestBox);
+        return nestBoxMapper.toNestBoxDto(nestBox);
     }
 
     public NestBoxDto expireNestBox(ExpireNestBoxCommand command) {
@@ -62,21 +71,30 @@ public class NestBoxService {
         nestBox.setNestBoxExpiration(new NestBoxExpiration(command.getNestBoxId(),
                 command.getDescription(), command.getReporter()));
         nestBox.setCondition(Condition.EXPIRED);
-        return mapper.toNestBoxDto(nestBox);
+        return nestBoxMapper.toNestBoxDto(nestBox);
     }
 
     public void deleteByNestBoxId(String nestBoxId) {
         NestBox nestBox = getNestBoxByNestBoxId(nestBoxId);
-        repository.delete(nestBox);
+        nestBoxRepository.delete(nestBox);
     }
 
     public void deleteAll() {
-        repository.deleteAll();
+        nestBoxRepository.deleteAll();
+    }
+
+    public List<NestingDto> findAllNesting(Optional<Integer> year) {
+        return year.map(value -> nestingRepository.findAllByYear(value).stream()
+                        .map(nesting -> nestingMapper.toNestingDto(nesting))
+                        .toList())
+                .orElseGet(() -> nestingRepository.findAll().stream()
+                        .map(nesting -> nestingMapper.toNestingDto(nesting))
+                        .toList());
     }
 
     private void validateNestBoxExpiration(NestBox nestBox) {
         if (nestBox.getNestBoxExpiration() != null &&
-        nestBox.getNestBoxExpiration().getDateOfExpiry() != null) {
+                nestBox.getNestBoxExpiration().getDateOfExpiry() != null) {
             throw new NestBoxAlreadyExpiredException(nestBox.getNestBoxId());
         }
     }
@@ -91,7 +109,7 @@ public class NestBoxService {
     }
 
     private NestBox getNestBoxByNestBoxId(String nestBoxId) {
-        return repository.findByNestBoxIdIgnoreCase(nestBoxId)
+        return nestBoxRepository.findByNestBoxIdIgnoreCase(nestBoxId)
                 .orElseThrow(() -> new NestBoxNotFoundException(nestBoxId));
     }
 

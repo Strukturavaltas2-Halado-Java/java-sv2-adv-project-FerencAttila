@@ -1,5 +1,6 @@
 package com.training360.rollernestboxes.nestboxes;
 
+import com.training360.rollernestboxes.NestBoxNestingService;
 import com.training360.rollernestboxes.nestboxes.dtos.ExpireNestBoxCommand;
 import com.training360.rollernestboxes.nestboxes.dtos.NestBoxDto;
 import com.training360.rollernestboxes.nestboxes.dtos.NestBoxPlacementCommand;
@@ -22,7 +23,7 @@ import java.util.Optional;
 @Tag(name = "Operations on nest boxes")
 public class NestBoxController {
 
-    private NestBoxService service;
+    private NestBoxNestingService service;
 
     @GetMapping
     @Operation(description = "List all nest boxes or nest boxes in given condition.")
