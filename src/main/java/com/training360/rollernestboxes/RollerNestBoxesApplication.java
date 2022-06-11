@@ -18,9 +18,9 @@ public class RollerNestBoxesApplication {
     public OpenAPI createOpenApiUI() {
         return new OpenAPI()
                 .info(new Info()
-                        .title("Roller nest boxes and nesting API")
+                        .title("Management of roller nest boxes, register of nesting")
                         .version("0.0.1-SNAPSHOT")
-                        .description("Operations on nest boxes and nesting")
+                        .description("CRUD operations on nest boxes and nesting")
                         .contact(new Contact().name("Attila Ferenc")));
     }
 }

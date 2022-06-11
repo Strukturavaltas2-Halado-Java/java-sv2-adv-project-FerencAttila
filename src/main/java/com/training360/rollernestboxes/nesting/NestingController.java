@@ -46,7 +46,7 @@ public class NestingController {
 
     @PutMapping(value = "/{id}")
     @Operation(description = "Concatenate new nesting notes by nesting's database id")
-    public NestingDto addNestingNotesById(@PathVariable(value= "id") long id, @Valid @RequestBody UpdateNestingCommand command) {
+    public NestingDto addNestingNotesById(@PathVariable(value = "id") long id, @Valid @RequestBody UpdateNestingCommand command) {
         return service.addNestingNotesById(id, command);
     }
 

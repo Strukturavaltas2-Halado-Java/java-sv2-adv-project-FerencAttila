@@ -7,7 +7,6 @@ import lombok.Setter;
 
 import javax.persistence.Embeddable;
 import javax.persistence.Embedded;
-import javax.validation.constraints.PastOrPresent;
 import java.time.LocalDate;
 
 @Getter
@@ -17,7 +16,6 @@ import java.time.LocalDate;
 @Embeddable
 public class NestingParameters {
 
-    @PastOrPresent
     private LocalDate dateOfSurvey;
 
     private String nestingSpecies;

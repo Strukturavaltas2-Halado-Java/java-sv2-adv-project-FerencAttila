@@ -13,6 +13,8 @@ import java.lang.annotation.Target;
 public @interface ValidateNestBoxIdNotExists {
 
     String message() default "Nest box id must be unique, cannot be null or empty string and consists maximum of 10 characters!";
+
     Class<?>[] groups() default {};
+
     Class<? extends Payload>[] payload() default {};
 }

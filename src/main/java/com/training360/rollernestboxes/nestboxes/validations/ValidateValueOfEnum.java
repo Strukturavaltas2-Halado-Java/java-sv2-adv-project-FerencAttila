@@ -13,7 +13,10 @@ import java.lang.annotation.Target;
 public @interface ValidateValueOfEnum {
 
     Class<? extends Enum<?>> enumClass();
+
     String message() default "Value must be any of enum {enumClass}";
+
     Class<?>[] groups() default {};
+
     Class<? extends Payload>[] payload() default {};
 }
