@@ -18,13 +18,13 @@ public class CoordinatesCommand {
     private static final int MINIMUM_EOV_Y = 43000;
     private static final int MAXIMUM_EOV_Y = 361400;
 
-    @Schema(description = "X coordinate in HD72/EOV (EPSG:23700) projection", example = "752577.15")
     @Min(value = MINIMUM_EOV_X, message = "The minimum value of the X coordinate is " + MINIMUM_EOV_X)
     @Max(value = MAXIMUM_EOV_X, message = "The maximum value of the X coordinate is " + MAXIMUM_EOV_X)
+    @Schema(description = "X coordinate in HD72/EOV (EPSG:23700) projection", example = "752577.15")
     private double eovX;
 
-    @Schema(description = "Y coordinate in HD72/EOV (EPSG:23700) projection", example = "268376.08")
     @Min(value = MINIMUM_EOV_Y, message = "The minimum value of the Y coordinate is " + MINIMUM_EOV_Y)
     @Max(value = MAXIMUM_EOV_Y, message = "The maximum value of the Y coordinate is " + MAXIMUM_EOV_Y)
+    @Schema(description = "Y coordinate in HD72/EOV (EPSG:23700) projection", example = "268376.08")
     private double eovY;
 }

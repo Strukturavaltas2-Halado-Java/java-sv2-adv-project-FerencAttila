@@ -19,16 +19,16 @@ public class NestBoxParametersCommand {
     @Schema(implementation = CoordinatesCommand.class)
     private CoordinatesCommand coordinatesCommand;
 
-    @Schema(description = "The holder of the nest box", example = "Quercus robur")
     @Size(max = 100, message = "Holder value must be consits of maximum 100 characters!")
+    @Schema(description = "The holder of the nest box", example = "Quercus robur")
     private String holder;
 
-    @Schema(description = "Height of the nest box", example = "4.5")
     @Min(value = 1, message = "You cannot place a roller nest box under 1 meter height!")
+    @Schema(description = "Height of the nest box", example = "4.5")
     private double height;
 
-    @Schema(description = "Orientation as quarter", enumAsRef = true)
     @ValidateValueOfEnum(enumClass = Quarter.class)
+    @Schema(description = "Orientation as quarter", enumAsRef = true)
     private Quarter orientation;
 
     @ValidateValueOfEnum(enumClass = NestBoxType.class)

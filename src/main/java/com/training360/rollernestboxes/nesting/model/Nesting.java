@@ -13,7 +13,8 @@ import javax.persistence.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "nesting")
+@Table(name = "nesting", uniqueConstraints = {
+@UniqueConstraint(name="unique_nest_box_survey_date_and_observer", columnNames = {"box_id", "survey_date", "observer"})})
 public class Nesting {
 
     @Id
@@ -21,7 +22,7 @@ public class Nesting {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "box_id")
+    @JoinColumn(name = "box_id", nullable = false)
     private NestBox nestBox;
 
     @Embedded
@@ -39,6 +40,7 @@ public class Nesting {
     @Column(name = "notes")
     private String notesOnNesting;
 
+    @Column(nullable = false)
     private String observer;
 
     public Nesting(NestBox nestBox, NestingParameters nestingParameters, String notesOnNesting, String observer) {

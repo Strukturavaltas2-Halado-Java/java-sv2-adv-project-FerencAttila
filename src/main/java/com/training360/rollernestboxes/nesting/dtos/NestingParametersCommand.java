@@ -6,10 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.validation.constraints.Max;
-import javax.validation.constraints.PastOrPresent;
-import javax.validation.constraints.PositiveOrZero;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.*;
 import java.time.LocalDate;
 
 @Getter
@@ -18,25 +15,26 @@ import java.time.LocalDate;
 @AllArgsConstructor
 public class NestingParametersCommand {
 
-    @PastOrPresent
+    @PastOrPresent(message = "Date of observation cannot be in the future!")
+    @NotNull(message = "Date of observation cannot be null!")
     @Schema(description = "Date of observation")
     private LocalDate dateOfSurvey;
 
     @Schema(description = "Scientific name of nesting species", example = "Coracias garrulus")
     private String nestingSpecies;
 
-    @Schema(description = "Number of living eggs", example = "4")
     @PositiveOrZero(message = "Number of eggs must be positive integer or zero!")
     @Max(value = SurveyCommand.MAXIMUM_NUMBER_OF_SUCCESSORS, message = "Number of eggs must be less then 21!")
+    @Schema(description = "Number of living eggs", example = "4")
     private int numberOfEggs;
 
-    @Schema(description = "Number of living nestlings", example = "5")
     @PositiveOrZero(message = "Number of nestlings must be positive integer or zero!")
     @Max(value = SurveyCommand.MAXIMUM_NUMBER_OF_SUCCESSORS, message = "Number of nestlings must be less then 21!")
+    @Schema(description = "Number of living nestlings", example = "5")
     private int numberOfNestlings;
 
-    @Schema(description = "Description of age", example = "18-20 days old chicks")
     @Size(max = 255, message = "Description of age of nestling must be consists maximum of 255 characters!")
+    @Schema(description = "Description of age", example = "18-20 days old chicks")
     private String ageOfNestlings;
 
     @Schema(implementation = MortalityCommand.class)

@@ -15,11 +15,11 @@ import lombok.Setter;
 @AllArgsConstructor
 public class UpdateNestBoxConditionCommand {
 
-    @Schema(description = "Unique nest box id, painted on the box", example = "1487/B")
     @ValidateNestBoxIdNotExists
+    @Schema(description = "Unique nest box id, painted on the box", example = "1487/B")
     private String nestBoxId;
 
-    @Schema(description = "Condition of the nest box", enumAsRef = true, example = "MUST_BE_REPLACED")
     @ValidateValueOfEnum(enumClass = Condition.class)
+    @Schema(description = "Condition of the nest box", enumAsRef = true, example = "MUST_BE_REPLACED")
     private Condition condition;
 }
