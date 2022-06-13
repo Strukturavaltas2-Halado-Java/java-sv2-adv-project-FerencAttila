@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @Repository
 public interface NestBoxRepository extends JpaRepository<NestBox, Long> {
@@ -16,7 +17,7 @@ public interface NestBoxRepository extends JpaRepository<NestBox, Long> {
 
     List<NestBox> findAllByConditionIsNot(Condition condition);
 
-    List<NestBox> findAllByConditionIs(Condition condition);
+    List<NestBox> findAllByConditionIsIn(Set<Condition> condition);
 
     boolean existsNestBoxByNestBoxId(String nestBoxId);
 

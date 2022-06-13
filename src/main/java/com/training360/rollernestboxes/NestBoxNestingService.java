@@ -25,6 +25,7 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @AllArgsConstructor
 @Service
@@ -39,13 +40,10 @@ public class NestBoxNestingService {
 
     private NestingMapper nestingMapper;
 
-    public List<NestBoxDto> findAllNestBoxes(Optional<Condition> condition) {
-        return condition.map(value -> nestBoxRepository.findAllByConditionIs(value).stream()
+    public List<NestBoxDto> findAllNestBoxesByConditions(Set<Condition> conditions) {
+        return nestBoxRepository.findAllByConditionIsIn(conditions).stream()
                         .map(nestBox -> nestBoxMapper.toNestBoxDto(nestBox))
-                        .toList())
-                .orElseGet(() -> nestBoxRepository.findAll().stream()
-                        .map(nestBox -> nestBoxMapper.toNestBoxDto(nestBox))
-                        .toList());
+                        .toList();
     }
 
     public NestBoxDto findByNestBoxId(String nestBoxId) {
@@ -91,8 +89,8 @@ public class NestBoxNestingService {
     }
 
     public List<NestingDto> findAllNesting(Optional<Integer> year, Optional<String> species) {
-        return getNestingByFilterValues(year, species).stream()
-                .map(n -> nestingMapper.toNestingDto(n))
+        return nestingRepository.findAllByYearAndSpecies(year, species).stream()
+                .map(nesting -> nestingMapper.toNestingDto(nesting))
                 .toList();
     }
 
@@ -155,20 +153,6 @@ public class NestBoxNestingService {
                 && command.getNestingParameters().getDateOfSurvey().isAfter(nestBox.getNestBoxExpiration().getDateOfExpiry())) {
             throw new InvalidSurveyDateException(command.getNestingParameters().getDateOfSurvey(), "after");
         }
-    }
-
-    private List<Nesting> getNestingByFilterValues(Optional<Integer> year, Optional<String> species) {
-        List<Nesting> nesting;
-        if (year.isPresent() && species.isPresent()) {
-            nesting = nestingRepository.findAllByYearAndSpecies(year.get(), species.get());
-        } else if (year.isPresent()) {
-            nesting = nestingRepository.findAllByYear(year.get());
-        } else if (species.isPresent()) {
-            nesting = nestingRepository.findAllBySpecies(species.get());
-        } else {
-            nesting = nestingRepository.findAll();
-        }
-        return nesting;
     }
 
     private void validateNestBoxExpirationIsNotExists(NestBox nestBox) {

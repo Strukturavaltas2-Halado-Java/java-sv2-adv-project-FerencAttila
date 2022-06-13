@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
-import java.util.Optional;
+import java.util.Set;
 
 @AllArgsConstructor
 @RestController
@@ -26,9 +26,9 @@ public class NestBoxController {
     private NestBoxNestingService service;
 
     @GetMapping(value = "/nest-boxes")
-    @Operation(description = "List all nest boxes or nest boxes in given condition.")
-    public List<NestBoxDto> findNestBoxes(@RequestParam Optional<Condition> condition) {
-        return service.findAllNestBoxes(condition);
+    @Operation(description = "List all nest boxes or nest boxes with given list of condition.")
+    public List<NestBoxDto> findNestBoxes(@RequestParam Set<Condition> conditions) {
+        return service.findAllNestBoxesByConditions(conditions);
     }
 
     @GetMapping
