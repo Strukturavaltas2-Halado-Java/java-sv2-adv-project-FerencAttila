@@ -15,6 +15,18 @@ services:
       MYSQL_PASSWORD: roller
       MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'
 
+  roller-test-database:
+    image: mariadb:10.8
+    container_name: roller_nestboxes_test_db
+    restart: on-failure
+    ports:
+      - "3307:3306"
+    environment:
+      MYSQL_DATABASE: roller
+      MYSQL_USER: roller
+      MYSQL_PASSWORD: roller
+      MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'
+
   roller-app:
     build:
       context: ./../
