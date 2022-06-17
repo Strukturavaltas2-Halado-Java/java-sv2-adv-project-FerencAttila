@@ -22,7 +22,7 @@ services:
     ports:
       - "3307:3306"
     environment:
-      MYSQL_DATABASE: roller
+      MYSQL_DATABASE: roller-test
       MYSQL_USER: roller
       MYSQL_PASSWORD: roller
       MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'

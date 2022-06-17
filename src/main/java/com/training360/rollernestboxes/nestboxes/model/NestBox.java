@@ -60,6 +60,14 @@ public class NestBox {
         this.notesOnNestBox = notesOnNestBox;
     }
 
+    public NestBox(String nestBoxId, NestBoxPlacement nestBoxPlacement, NestBoxExpiration nestBoxExpiration, Condition condition, String notesOnNestBox) {
+        this.nestBoxId = nestBoxId;
+        this.nestBoxPlacement = nestBoxPlacement;
+        this.nestBoxExpiration = nestBoxExpiration;
+        this.condition = condition;
+        this.notesOnNestBox = notesOnNestBox;
+    }
+
     public void addNesting(Nesting nesting) {
         this.nesting.add(nesting);
     }

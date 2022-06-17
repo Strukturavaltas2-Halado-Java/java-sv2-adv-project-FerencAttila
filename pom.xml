@@ -12,7 +12,7 @@
     <artifactId>roller-nestboxes</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>roller-nestboxes</name>
-    <description>roller-nestboxes</description>
+    <description>Roller nestbox and register</description>
     <properties>
         <java.version>17</java.version>
         <mapstruct.version>1.5.1.Final</mapstruct.version>
@@ -68,7 +68,7 @@
         <dependency>
             <groupId>org.springdoc</groupId>
             <artifactId>springdoc-openapi-ui</artifactId>
-            <version>1.6.8</version>
+            <version>1.6.9</version>
         </dependency>
 
         <dependency>
@@ -119,7 +119,7 @@
                     <verbose>true</verbose>
                     <images>
                         <image>
-                            <name>inventory</name>
+                            <name>roller-nestboxes</name>
                             <build>
                                 <dockerFileDir>${project.basedir}/docker/</dockerFileDir>
                                 <assembly>

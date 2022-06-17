@@ -21,6 +21,6 @@ public interface NestBoxRepository extends JpaRepository<NestBox, Long> {
 
     boolean existsNestBoxByNestBoxId(String nestBoxId);
 
-    @Query("select n from NestBox n where exists(select nb from NestBox nb where nb.condition <> 'EXPIRED' and n.nestBoxId = :nestBoxId)")
+    @Query("select case when count(n) > 0 then true else false end from NestBox n where n.condition <> 'EXPIRED' and n.nestBoxId = :nestBoxId")
     boolean existsNestBoxByNestBoxIdAndIsLiving(String nestBoxId);
 }
