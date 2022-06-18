@@ -1,82 +1,53 @@
 package com.training360.rollernestboxes.nestboxes.model;
 
-import com.training360.rollernestboxes.nesting.exceptions.NestingNotFoundException;
-import com.training360.rollernestboxes.nesting.model.Nesting;
+import com.training360.rollernestboxes.nest.model.Nest;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
+@Entity
 @Getter
 @Setter
-@NoArgsConstructor
 @AllArgsConstructor
-@Entity
+@NoArgsConstructor
 @Table(name = "nest_boxes")
 public class NestBox {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @Column(name = "nest_box_id")
+    private Long nestBoxId;
 
-    @Column(name = "nest_box_id", unique = true, nullable = false)
-    private String nestBoxId;
-
-    @Embedded
-    @AttributeOverride(name = "dateOfPlacement", column = @Column(name = "placement_date", nullable = false))
-    @AttributeOverride(name = "nestBoxParameters.coordinates.eovX", column = @Column(name = "eov_x", nullable = false))
-    @AttributeOverride(name = "nestBoxParameters.coordinates.eovY", column = @Column(name = "eov_y", nullable = false))
-    @AttributeOverride(name = "nestBoxParameters.holder", column = @Column(name = "holder"))
-    @AttributeOverride(name = "nestBoxParameters.height", column = @Column(name = "height"))
-    @AttributeOverride(name = "nestBoxParameters.orientation", column = @Column(name = "orientation"))
-    @AttributeOverride(name = "nestBoxParameters.nestBoxType", column = @Column(name = "nest_box_type"))
-    @AttributeOverride(name = "reporterOfPlacement", column = @Column(name = "placement_reporter", nullable = false))
-    private NestBoxPlacement nestBoxPlacement;
+    @Column(name = "nest_box_number", nullable = false, unique = true)
+    private String nestBoxNumber;
 
     @Embedded
-    @AttributeOverride(name = "dateOfExpiry", column = @Column(name = "expiry_date"))
-    @AttributeOverride(name = "descriptionOfExpiry", column = @Column(name = "expiry_desc"))
-    @AttributeOverride(name = "reporterOfExpiry", column = @Column(name = "expiry_reporter"))
-    private NestBoxExpiration nestBoxExpiration;
+    @AttributeOverride(name = "eovX", column = @Column(name = "eov_x", nullable = false))
+    @AttributeOverride(name = "eovY", column = @Column(name = "eov_y", nullable = false))
+    private Coordinates coordinates;
 
-    @Column(name = "nest_box_condition", nullable = false)
-    @Enumerated(value = EnumType.STRING)
-    private Condition condition;
+    @Enumerated(EnumType.STRING)
+    private Quarter direction;
 
-    @Column(name = "notes")
-    private String notesOnNestBox;
+    @Column(precision = 1)
+    private double height;
 
-    @OneToMany(mappedBy = "nestBox", orphanRemoval = true)
-    private List<Nesting> nesting = new ArrayList<>();
+    @OneToMany(mappedBy = "nestBox")
+    private Set<Nest> nests = new HashSet<>();
 
-    public NestBox(String nestBoxId, NestBoxPlacement nestBoxPlacement, Condition condition, String notesOnNestBox) {
-        this.nestBoxId = nestBoxId;
-        this.nestBoxPlacement = nestBoxPlacement;
-        this.condition = condition;
-        this.notesOnNestBox = notesOnNestBox;
+    public NestBox(String nestBoxNumber, Coordinates coordinates, Quarter direction, double height) {
+        this.nestBoxNumber = nestBoxNumber;
+        this.coordinates = coordinates;
+        this.direction = direction;
+        this.height = height;
     }
 
-    public NestBox(String nestBoxId, NestBoxPlacement nestBoxPlacement, NestBoxExpiration nestBoxExpiration, Condition condition, String notesOnNestBox) {
-        this.nestBoxId = nestBoxId;
-        this.nestBoxPlacement = nestBoxPlacement;
-        this.nestBoxExpiration = nestBoxExpiration;
-        this.condition = condition;
-        this.notesOnNestBox = notesOnNestBox;
-    }
-
-    public void addNesting(Nesting nesting) {
-        this.nesting.add(nesting);
-    }
-
-    public void removeNesting(long nestingId) {
-        Nesting actual = this.nesting.stream()
-                .filter(n -> n.getId() == nestingId)
-                .findFirst()
-                .orElseThrow(() -> new NestingNotFoundException(nestingId));
-        this.nesting.remove(actual);
+    public void addNest(Nest nest) {
+        nests.add(nest);
     }
 }

@@ -12,9 +12,9 @@ import lombok.Setter;
 @AllArgsConstructor
 public class CoordinatesDto {
 
-    @Schema(description = "X coordinate in HD72/EOV (EPSG:23700) projection", example = "752577.15")
-    private double eovX;
+    @Schema(description = "X coordinate in HD72/EOV (EPSG:23700) projection", example = "752577")
+    private int eovX;
 
-    @Schema(description = "Y coordinate in HD72/EOV (EPSG:23700) projection", example = "268376.08")
-    private double eovY;
+    @Schema(description = "Y coordinate in HD72/EOV (EPSG:23700) projection", example = "268376")
+    private int eovY;
 }

@@ -12,7 +12,7 @@ jobs:
       with:
         compose-file: "./docker/docker-compose.yml"
         services: |
-          roller-database
+          roller-test-database
     - name: Set up JDK 17
       uses: actions/setup-java@v3
       with:

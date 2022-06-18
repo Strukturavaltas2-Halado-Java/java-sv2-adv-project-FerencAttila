@@ -1,0 +1,35 @@
+POST http://localhost:8080/api/nest-boxes
+Accept: application/json
+Content-Type:  application/json
+
+{
+  "nestBoxNumber": "1600",
+  "coordinatesCommand": {
+    "eovX": 764872,
+    "eovY": 271458
+  },
+  "direction": "SW",
+  "height": 9.5
+}
+
+###
+PUT http://localhost:8080/api/nest-boxes
+Accept: application/json
+Content-Type: application/json
+
+{
+  "nestBoxNumber": "1600",
+  "direction": "NE",
+  "height": 6.5
+}
+
+###
+GET http://localhost:8080/api/nest-boxes?nest-box-number=1600
+Accept: application/json
+
+###
+GET http://localhost:8080/api/nest-boxes/all
+Accept: application/json
+
+###
+DELETE http://localhost:8080/api/nest-boxes?nest-box-number=1600

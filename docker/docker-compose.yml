@@ -45,4 +45,5 @@ services:
 
     depends_on:
       - roller-database
+      - roller-test-database
     entrypoint: ['/opt/bin/wait-for-it.sh', '-t', '120', 'roller-database:3306', '--', 'java', 'org.springframework.boot.loader.JarLauncher']

@@ -1,0 +1,44 @@
+POST http://localhost:8080/api/nests
+Accept: application/json
+Content-Type: application/json
+
+{
+  "nestBoxNumber": "1457/c",
+  "dateOfSurvey": "2022-06-18",
+  "species": "Coracias garrulus",
+  "numberOfNestlings": 4,
+  "observer": "John Doe"
+}
+
+###
+POST http://localhost:8080/api/nests
+Accept: application/json
+Content-Type: application/json
+
+{
+"nestBoxNumber": "2568",
+"dateOfSurvey": "2015-06-18",
+"species": "Corvus monedula",
+"numberOfNestlings": 4,
+"observer": "John Doe"
+}
+
+###
+GET http://localhost:8080/api/nests?nest-box-number=2568
+Accept: application/json
+
+###
+GET http://localhost:8080/api/nests?nest-box-number=2568&species=Corvus%20monedula
+Accept: application/json
+
+###
+GET http://localhost:8080/api/nests?species=Coracias%20garrulus
+Accept: application/json
+
+###
+GET http://localhost:8080/api/nests
+Accept: application/json
+
+###
+GET http://localhost:8080/api/nests/zoology-data
+Accept: application/json

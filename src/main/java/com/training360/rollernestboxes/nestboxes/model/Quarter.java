@@ -1,6 +1,20 @@
 package com.training360.rollernestboxes.nestboxes.model;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+
+@Getter
+@AllArgsConstructor
 public enum Quarter {
 
-    NORTH, SOUTH, EAST, WEST, NORTHEAST, NORTHWEST, SOUTHEAST, SOUTHWEST
+    N("North"),
+    NE("Northeast"),
+    E("East"),
+    SE("Southeast"),
+    S("South"),
+    SW("Southwest"),
+    W("West"),
+    NW("Northwest");
+
+    private final String description;
 }
