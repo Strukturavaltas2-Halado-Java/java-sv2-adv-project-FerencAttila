@@ -3,7 +3,7 @@ Accept: application/json
 Content-Type: application/json
 
 {
-  "nestBoxNumber": "1485",
+  "nestBoxNumber": "1578/c",
   "dateOfSurvey": "2019-06-18",
   "species": "Coracias garrulus",
   "numberOfNestlings": 4,

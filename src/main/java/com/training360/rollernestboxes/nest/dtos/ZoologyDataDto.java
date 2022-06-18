@@ -23,7 +23,7 @@ public class ZoologyDataDto {
     private CoordinatesDto coordinates;
 
     @Schema(description = "Scientific name of nesting species", example = "Coracias garrulus")
-    private String nestingSpecies;
+    private String species;
 
     @Schema(description = "Quantity of animals", example = "3")
     private int quantity;

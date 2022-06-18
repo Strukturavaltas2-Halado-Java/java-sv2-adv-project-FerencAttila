@@ -23,7 +23,7 @@ public class Nest {
     private Long nestId;
 
     @ManyToOne
-    @JoinColumn(name = "id")
+    @JoinColumn(name = "nest_box_id")
     private NestBox nestBox;
 
     @Column(name = "date_of_survey", nullable = false)

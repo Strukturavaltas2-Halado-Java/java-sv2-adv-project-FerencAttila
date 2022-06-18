@@ -35,6 +35,15 @@ Az adatbázisban alkalmazott elvárások az egyes attribútumokkal kapcsolatban:
 * eov_x: not null,
 * eov_y: not null
 
+A json állományokban előforduló kifejezések magyarázata:
+
+- nestBoxNumber: az odúra festett azonosító
+- coordinates: földrajzi koordínáták HD72/EOV (EPSG:23700) projekcióban
+    - eovX: x koordináta
+    - eovY: y koordináta
+- direction: az odú bejáratának iránya égtájak szerint
+- height: az odú helyének magassága a földfelszíntől, méterben
+
 | HTTP metódus | Végpont               | Leírás                                                              |
 |--------------|-----------------------|---------------------------------------------------------------------|
 | GET          | `/api/nest-boxes/all` | lekérdezi az összes odút, visszaadja egy listában                   |
@@ -77,6 +86,13 @@ Response code: 200
 `/api/nest-boxes` (GET):
 
 GET http://localhost:8080/api/nest-boxes?nest-box-number=1600
+
+- nestBoxNumber: az odúra festett azonosító
+- coordinates: földrajzi koordínáták HD72/EOV (EPSG:23700) projekcióban
+    - eovX: x koordináta
+    - eovY: y koordináta
+- direction: az odú bejáratának iránya égtájak szerint
+- height: az odú helyének magassága a földfelszíntől, méterben
 
 accept:
 
@@ -205,6 +221,19 @@ Az adatbázisban alkalmazott elvárások az egyes attribútumokkal kapcsolatban:
 * nest_box_id: foreign key, not null
 * date_of_survey: not null
 * observer: not null
+
+A json állományokban előforduló kifejezések magyarázata:  
+_(Az odúknál is szereplő változók magyarázatát ld. ott.)_
+
+dateOfSurvey: a terepi adatgyűjtés dátuma
+species: a fészkelő faj tudományos neve
+numberOfNestlings: tojások és/vagy fiókák száma
+observer: terepi adatgyűjtő neve
+quantity: a szaporulat (tojás és fióka) összesen
+unitOfQuantity: mennyiség egysége, a projekt esetében mindig "egyedszám"
+activity: a faj aktivitása, a projekt esetében mindig "fióka fészekben"
+surveyMethod: felmérési módazertan a projekt esetében mindig "szalakóta odúellenőrzés"
+collectionMethod: gyűjtési mód, a projekt esetében mindig "vizuális"
 
 | HTTP metódus | Végpont             | Leírás                                                                                      |
 |--------------|---------------------|---------------------------------------------------------------------------------------------|
@@ -344,6 +373,43 @@ GET http://localhost:8080/api/nests?nest-box-number=1485&species=Corvus%20monedu
 
 Response code: 200
 
+`/api/zoology-data` (GET)
+
+GET http://localhost:8080/api/nests/zoology-data
+
+    [
+    {
+    "dateOfSurvey": "2019-06-18",
+    "coordinates": {
+    "eovX": 758615,
+    "eovY": 257498
+    },
+    "species": "Coracias garrulus",
+    "quantity": 4,
+    "unitOfQuantity": "individual",
+    "activity": "Nestling in nest",
+    "surveyMethod": "Nest box control",
+    "collectionMethod": "visual",
+    "observer": "John Doe"
+    },
+    {
+    "dateOfSurvey": "2015-06-18",
+    "coordinates": {
+    "eovX": 758615,
+    "eovY": 257498
+    },
+    "species": "Corvus monedula",
+    "quantity": 4,
+    "unitOfQuantity": "individual",
+    "activity": "Nestling in nest",
+    "surveyMethod": "Nest box control",
+    "collectionMethod": "visual",
+    "observer": "John Doe"
+    }
+    ]
+
+Response code: 200
+
 `/api/nests` (POST):
 
 POST http://localhost:8080/api/nests
@@ -405,13 +471,6 @@ Az alkalmazás egy tipikus három rétegű alkalmazás, amely két controller r�
 kommunikációt. Az innen érkező adatok egyetlen service rétegben találkoznak, ahol az üzleti logika valósul
 meg. A két entitás önálló repository rétegeken keresztül csatlakozik a MariaDB adatbázishoz.
 
-Az alkalmazás docker környezetben is futtatható. Ehhez először el kell készíteni az alkalmazás build-jét
-majd a docker mappában ki kell adni a `docker-compose up -d` parancsot. Enek hatására három konténer indul
-el. Egy a production adatbázis, amelyhez az alkalmazás  a `jdbc:mariadb://localhost:3306/roller`
-hivatkozáson kesresztül csatlakozik. A tesztesetek futtatásához önálló MariaDb adatbázis áll rendelkezésre, a
-`jdbc:mariadb://localhost:3307/roller-test` címen. Maga az alkalmazás alapértelmezetten docker futtatása
-esetén is a 8080-as porton keresztül érhető el.
-
 ### Spring keretrendszer
 
 Az alkalmazás a Spring keretrendszer 2.7.0 verziójával készült.
@@ -449,3 +508,12 @@ verzióját használtam.
 
 A json openapi dokumentum a http://localhost:8080/v3/api-docs címen érhető el, szintén az alkalmazás
 futtatásakor.
+
+### Docker
+
+Az alkalmazás docker környezetben is futtatható. Ehhez először el kell készíteni az alkalmazás build-jét
+majd a docker mappában ki kell adni a `docker-compose up -d` parancsot. Enek hatására három konténer indul
+el. Egy a production adatbázis, amelyhez az alkalmazás  a `jdbc:mariadb://localhost:3306/roller`
+hivatkozáson kesresztül csatlakozik. A tesztesetek futtatásához önálló MariaDb adatbázis áll rendelkezésre, a
+`jdbc:mariadb://localhost:3307/roller-test` címen. Maga az alkalmazás alapértelmezetten docker futtatása
+esetén is a 8080-as porton keresztül érhető el.
