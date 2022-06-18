@@ -37,7 +37,7 @@ public class NestBox {
     @Column(precision = 1)
     private double height;
 
-    @OneToMany(mappedBy = "nestBox")
+    @OneToMany(mappedBy = "nestBox", cascade = CascadeType.PERSIST)
     private Set<Nest> nests = new HashSet<>();
 
     public NestBox(String nestBoxNumber, Coordinates coordinates, Quarter direction, double height) {

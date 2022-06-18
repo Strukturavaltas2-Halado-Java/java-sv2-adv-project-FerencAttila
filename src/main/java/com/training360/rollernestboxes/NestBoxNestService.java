@@ -81,7 +81,6 @@ public class NestBoxNestService {
                 command.getNumberOfNestlings(),
                 command.getObserver());
         nestBox.addNest(nest);
-        nestRepository.save(nest);
         return nestMapper.toNestDto(nest);
     }
 
