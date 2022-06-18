@@ -5,11 +5,11 @@ Content-Type:  application/json
 {
   "nestBoxNumber": "1600",
   "coordinatesCommand": {
-    "eovX": 764872,
-    "eovY": 271458
+    "eovX": 758615,
+    "eovY": 257498
   },
-  "direction": "SW",
-  "height": 9.5
+  "direction": "N",
+  "height": 3.5
 }
 
 ###

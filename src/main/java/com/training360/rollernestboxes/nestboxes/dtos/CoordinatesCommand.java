@@ -7,6 +7,7 @@ import lombok.Setter;
 
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 
 @Getter
 @Setter
@@ -20,11 +21,13 @@ public class CoordinatesCommand {
 
     @Min(value = MINIMUM_EOV_X, message = "The minimum value of the x coordinate is " + MINIMUM_EOV_X)
     @Max(value = MAXIMUM_EOV_X, message = "The maximum value of the x coordinate is " + MAXIMUM_EOV_X)
+    @NotNull
     @Schema(description = "X coordinate in HD72/EOV (EPSG:23700) projection", example = "752577")
     private int eovX;
 
     @Min(value = MINIMUM_EOV_Y, message = "The minimum value of the x coordinate is " + MINIMUM_EOV_Y)
     @Max(value = MAXIMUM_EOV_Y, message = "The maximum value of the x coordinate is " + MAXIMUM_EOV_Y)
+    @NotNull
     @Schema(description = "Y coordinate in HD72/EOV (EPSG:23700) projection", example = "268376")
     private int eovY;
 }

@@ -1,7 +1,7 @@
 CREATE TABLE nests
 (
     nest_id         BIGINT AUTO_INCREMENT NOT NULL,
-    id              BIGINT                NULL,
+    nest_box_id     BIGINT                NOT NULL,
     date_of_survey  date                  NOT NULL,
     species         VARCHAR(45)           NULL,
     nestling_number INT                   NULL,
@@ -10,4 +10,4 @@ CREATE TABLE nests
 );
 
 ALTER TABLE nests
-    ADD CONSTRAINT FK_NESTS_ON_ID FOREIGN KEY (id) REFERENCES nest_boxes (nest_box_id);
+    ADD CONSTRAINT FK_NESTS_ON_ID FOREIGN KEY (nest_box_id) REFERENCES nest_boxes (nest_box_id);

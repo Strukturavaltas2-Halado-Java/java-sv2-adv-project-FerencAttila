@@ -9,6 +9,7 @@ import lombok.Setter;
 
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 
 @Getter
 @Setter
@@ -27,6 +28,7 @@ public class NestBoxPuttingCommand {
 
     @Min(value = 1, message = "You cannot place a roller nest box lower then 1 meter!")
     @Max(value = 10, message ="Do not place a nest box higher then 10 meters!")
+    @NotNull
     @Schema(description = "Height of the nest box", example = "4.5")
     private double height;
 }

@@ -4,8 +4,8 @@ CREATE TABLE nest_boxes
     nest_box_number VARCHAR(10)           NOT NULL,
     direction       VARCHAR(2)            NULL,
     height          DOUBLE                NULL,
-    eov_x           INT                   NULL,
-    eov_y           INT                   NULL,
+    eov_x           INT                   NOT NULL,
+    eov_y           INT                   NOT NULL,
     CONSTRAINT pk_nest_boxes PRIMARY KEY (nest_box_id)
 );
 
