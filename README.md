@@ -14,8 +14,8 @@ integrálását a meglévő adattároló rendszerekben (Biotika).
 Az alkalmazás API felületén keresztül lehet feltölteni az új odúkihelyezéseket, valamint a költések
 ellenőrzése során gyűjtött adatokat.
 
-_A dokumentációban szereplő, alkalmazás által biztosított url természetesen helyi gépen történő futtatás
-esetén érvényesek. A 'http://localhost:8080' rész helyett mindig az aktuális kiszolgáló url-jét és a
+_A dokumentációban szereplő, alkalmazás által biztosított url-ek helyi gépen történő futtatás esetén
+érvényesek. A 'http://localhost:8080' rész helyett mindig az aktuális kiszolgáló url-jét és a
 megfelelő portszámot kell behelyettesíteni._
 
 ![ER diagram of the database](/img/roller_nestboxes_database.jpg)
@@ -235,11 +235,11 @@ activity: a faj aktivitása, a projekt esetében mindig "fióka fészekben"
 surveyMethod: felmérési módazertan a projekt esetében mindig "szalakóta odúellenőrzés"
 collectionMethod: gyűjtési mód, a projekt esetében mindig "vizuális"
 
-| HTTP metódus | Végpont             | Leírás                                                                                      |
-|--------------|---------------------|---------------------------------------------------------------------------------------------|
-| GET          | `/api/nests`        | lekérdezi az összes fészkelést, illetve odúszám és/vagy költő faj szerint szűr              |
-| GET          | `/api/zoology-data` | lekérdezi az összes fészkelkést, a zoológiai adatbázisnak megfelelő formátumban adja vissza |
-| POST         | `/api/nests`        | létrehoz egy fészkelést terepen gyűjtött adatok alapján                                     |                                                 |
+| HTTPmetódus | Végpont             | Leírás                                                                                      |
+|-------------|---------------------|---------------------------------------------------------------------------------------------|
+| GET         | `/api/nests`        | lekérdezi az összes fészkelést, illetve odúszám és/vagy költő faj szerint szűr              |
+| GET         | `/api/zoology-data` | lekérdezi az összes fészkelkést, a zoológiai adatbázisnak megfelelő formátumban adja vissza |
+| POST        | `/api/nests`        | létrehoz egy fészkelést terepen gyűjtött adatok alapján                                     |                                                 |
 
 Példa url, bean validáció és mintadatok az egyes végpontokon:
 
@@ -473,9 +473,10 @@ meg. A két entitás önálló repository rétegeken keresztül csatlakozik a Ma
 
 ### Spring keretrendszer
 
-Az alkalmazás a Spring keretrendszer 2.7.0 verziójával készült.
+Az alkalmazás a Spring Boot 2.7.0 verziójával készült, a Spring keretrendszer 5.3.20-as verziójával
+alkalmazva.
 
-Fontosabb spring függőségek:
+Fontosabb függőségek:
 
 Production:
 
@@ -488,17 +489,22 @@ Test:
 - Spring Boot Starter Webflux
 - Spring Boot Starter Test
 
-További alkalmazott könyvtárak:
+További alkalmazott könyvtárak, alkalmazások:
 
-- Lombok
+- Lombok (1.18.24)
 - MapStruct (1.5.1.Final)
 - Zalando Problem Spring Web Starter (0.27.0)
+- Tomcat server 9.0.63
 
+### Tesztelés
+
+A tesztesetek a JUnit 5.8.2 keretrendszeren alapulnak, de a legtöbb assert az assertJ 3.22.0 metódusait
+lkalmazza. Integrációs tesztek esetén a WebFlux technológiát alkalmaztam.
 
 ### Adatbázis
 
-Az alkalmazás az adatokat MariaDb adtabázis 10.8-as verzióján futó adatbázisba menti.
-Az adatbázis migrálását FlyWay migrácuós eszközzel valósítottam meg.
+Az alkalmazás az adatokat MariaDb 10.8-as verzióján futó adatbázisba menti.
+Az adatbázis migrálását FlyWay 5.8.11 migrációs eszközzel valósítottam meg.
 
 ### OpenApi documentáció
 
@@ -509,11 +515,17 @@ verzióját használtam.
 A json openapi dokumentum a http://localhost:8080/v3/api-docs címen érhető el, szintén az alkalmazás
 futtatásakor.
 
-### Docker
+### Alkalmazás futtatása docker segítségével
 
-Az alkalmazás docker környezetben is futtatható. Ehhez először el kell készíteni az alkalmazás build-jét
-majd a docker mappában ki kell adni a `docker-compose up -d` parancsot. Enek hatására három konténer indul
-el. Egy a production adatbázis, amelyhez az alkalmazás  a `jdbc:mariadb://localhost:3306/roller`
-hivatkozáson kesresztül csatlakozik. A tesztesetek futtatásához önálló MariaDb adatbázis áll rendelkezésre, a
-`jdbc:mariadb://localhost:3307/roller-test` címen. Maga az alkalmazás alapértelmezetten docker futtatása
-esetén is a 8080-as porton keresztül érhető el.
+A git repository klónozását követően helyben is futtatható az alkalmazás, amennyiben a docker és
+docker-compose eszközök helyben rendelkezésre állnak.  
+Az alkalmazás docker környezetben is futtatható. Ehhez először el kell készíteni az alkalmazás build-jét.
+Ehhez, ha a Maven eszköz nem áll rendelkezésre, használható a projektben található mvnw script is. Az
+`mvnw package -DskipTests` parancs használatával elkészíthetjük a szükséges állományokat.  
+Ezt követően a docker mappában ki kell adni a `docker-compose up -d` parancsot. Ennek hatására három
+konténer indul el. Egy a production adatbázis, amelyhez az alkalmazás  a
+`jdbc:mariadb://localhost:3306/roller` hivatkozáson keresztül csatlakozik. A tesztesetek futtatásához
+önálló MariaDb adatbázis áll rendelkezésre, a `jdbc:mariadb://localhost:3307/roller-test` címen. Maga az
+alkalmazás alapértelmezetten docker futtatása esetén is a 8080-as porton keresztül érhető el.
+
+![Roller in nest box](img/roller_in_nestbox_small.jpg)
