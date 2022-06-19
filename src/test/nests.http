@@ -24,11 +24,11 @@ Content-Type: application/json
 }
 
 ###
-GET http://localhost:8080/api/nests?nest-box-number=1485
+GET http://localhost:8080/api/nests?nest-box-number=1600
 Accept: application/json
 
 ###
-GET http://localhost:8080/api/nests?nest-box-number=1485&species=Coracias%20garrulus
+GET http://localhost:8080/api/nests?nest-box-number=1600&species=Coracias%20garrulus
 Accept: application/json
 
 ###
