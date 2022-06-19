@@ -9,12 +9,15 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.test.context.jdbc.Sql;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
+@Sql(statements = {"delete from nests", "delete from nest_boxes"})
 class NestBoxRepositoryIT {
 
     @Autowired
@@ -60,7 +63,7 @@ class NestBoxRepositoryIT {
     @Test
     void deleteNestBoxTest() {
         NestBox nestBox = new NestBox("1600",
-                new Coordinates(748514,255689),
+                new Coordinates(748514, 255689),
                 Quarter.NW,
                 1.5);
         repository.save(nestBox);

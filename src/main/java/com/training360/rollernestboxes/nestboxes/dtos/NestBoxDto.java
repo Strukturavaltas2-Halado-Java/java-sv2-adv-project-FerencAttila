@@ -2,6 +2,7 @@ package com.training360.rollernestboxes.nestboxes.dtos;
 
 import com.training360.rollernestboxes.nestboxes.model.Quarter;
 import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -9,6 +10,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
+@AllArgsConstructor
 public class NestBoxDto {
 
     @Schema(description = "Nest box id, painted on nest box", example = "1457/c")

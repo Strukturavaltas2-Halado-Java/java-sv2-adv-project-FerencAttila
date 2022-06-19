@@ -22,19 +22,20 @@ public class Nest {
     @Column(name = "nest_id")
     private Long nestId;
 
-    @ManyToOne
+    @ManyToOne(optional = false)
     @JoinColumn(name = "nest_box_id")
     private NestBox nestBox;
 
     @Column(name = "date_of_survey", nullable = false)
     private LocalDate dateOfSurvey;
 
+    @Column(length = 45)
     private String species;
 
     @Column(name = "nestling_number")
     private int numberOfNestlings;
 
-    @Column(nullable = false)
+    @Column(nullable = false, length = 100)
     private String observer;
 
     public Nest(NestBox nestBox, LocalDate dateOfSurvey, String species, int numberOfNestlings, String observer) {

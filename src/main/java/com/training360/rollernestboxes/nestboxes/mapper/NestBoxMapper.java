@@ -11,5 +11,5 @@ public interface NestBoxMapper {
 
     CoordinatesDto toCoordinatesDto(Coordinates coordinates);
 
-    NestBoxDto toNestBoxDto (NestBox nestBox);
+    NestBoxDto toNestBoxDto(NestBox nestBox);
 }

@@ -2,6 +2,7 @@ package com.training360.rollernestboxes;
 
 import com.training360.rollernestboxes.nest.dtos.NestDto;
 import com.training360.rollernestboxes.nest.dtos.SurveyCommand;
+import com.training360.rollernestboxes.nest.dtos.ZoologyDataDto;
 import com.training360.rollernestboxes.nest.exceptions.SurveyIsNotUniqueException;
 import com.training360.rollernestboxes.nest.mapper.NestMapper;
 import com.training360.rollernestboxes.nest.model.Nest;
@@ -9,7 +10,6 @@ import com.training360.rollernestboxes.nest.repository.NestRepository;
 import com.training360.rollernestboxes.nestboxes.dtos.NestBoxDto;
 import com.training360.rollernestboxes.nestboxes.dtos.NestBoxPuttingCommand;
 import com.training360.rollernestboxes.nestboxes.dtos.UpdateNestBoxCommand;
-import com.training360.rollernestboxes.nest.dtos.ZoologyDataDto;
 import com.training360.rollernestboxes.nestboxes.exceptions.CannotDeleteNestBoxException;
 import com.training360.rollernestboxes.nestboxes.exceptions.NestBoxNotFoundException;
 import com.training360.rollernestboxes.nestboxes.mapper.NestBoxMapper;
@@ -94,7 +94,7 @@ public class NestBoxNestService {
     public void deleteNestBox(String nestBoxNumber) {
         NestBox nestBox = getNestBoxByNestBoxNumber(nestBoxNumber);
         if (isNestBoxHasNests(nestBox)) {
-              throw new CannotDeleteNestBoxException(nestBoxNumber);
+            throw new CannotDeleteNestBoxException(nestBoxNumber);
         }
         nestBoxRepository.delete(nestBox);
     }

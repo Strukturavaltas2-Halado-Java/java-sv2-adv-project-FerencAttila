@@ -10,6 +10,6 @@ public class NestBoxNotFoundException extends AbstractThrowableProblem {
         super(URI.create("nest-box/nest-box-not-found"),
                 "Nest box not found in the database",
                 Status.BAD_REQUEST,
-                String.format("Nest box with nest box number %s does not exists", nestBoxNumber));
+                String.format("Nest box with nest box number %s does not exists!", nestBoxNumber));
     }
 }

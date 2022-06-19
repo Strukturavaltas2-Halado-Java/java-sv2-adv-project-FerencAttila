@@ -20,10 +20,10 @@ public class NestBox {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "nest_box_id")
+    @Column(name = "nest_box_id", length = 10)
     private Long nestBoxId;
 
-    @Column(name = "nest_box_number", nullable = false, unique = true)
+    @Column(name = "nest_box_number", nullable = false, unique = true, length = 10)
     private String nestBoxNumber;
 
     @Embedded
@@ -32,6 +32,7 @@ public class NestBox {
     private Coordinates coordinates;
 
     @Enumerated(EnumType.STRING)
+    @Column(length = 2)
     private Quarter direction;
 
     @Column(precision = 1)
@@ -41,6 +42,14 @@ public class NestBox {
     private Set<Nest> nests = new HashSet<>();
 
     public NestBox(String nestBoxNumber, Coordinates coordinates, Quarter direction, double height) {
+        this.nestBoxNumber = nestBoxNumber;
+        this.coordinates = coordinates;
+        this.direction = direction;
+        this.height = height;
+    }
+
+    public NestBox(Long nestBoxId, String nestBoxNumber, Coordinates coordinates, Quarter direction, double height) {
+        this.nestBoxId = nestBoxId;
         this.nestBoxNumber = nestBoxNumber;
         this.coordinates = coordinates;
         this.direction = direction;

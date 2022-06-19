@@ -31,7 +31,7 @@ public class ZoologyDataDto {
     @Schema(description = "Unit of quantity", example = "individual")
     private String unitOfQuantity;
 
-    @Schema(description = "Activity of animals", example = "On breeding site")
+    @Schema(description = "Activity of animals", example = "Nestling in nest")
     private String activity;
 
     @Schema(description = "Survey methodology", example = "Nest box control")

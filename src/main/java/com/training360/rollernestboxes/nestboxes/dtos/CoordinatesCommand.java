@@ -1,6 +1,7 @@
 package com.training360.rollernestboxes.nestboxes.dtos;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -12,6 +13,7 @@ import javax.validation.constraints.NotNull;
 @Getter
 @Setter
 @NoArgsConstructor
+@AllArgsConstructor
 public class CoordinatesCommand {
 
     private static final int MINIMUM_EOV_X = 426400;
@@ -21,13 +23,13 @@ public class CoordinatesCommand {
 
     @Min(value = MINIMUM_EOV_X, message = "The minimum value of the x coordinate is " + MINIMUM_EOV_X)
     @Max(value = MAXIMUM_EOV_X, message = "The maximum value of the x coordinate is " + MAXIMUM_EOV_X)
-    @NotNull
+    @NotNull(message = "X coordinate is required")
     @Schema(description = "X coordinate in HD72/EOV (EPSG:23700) projection", example = "752577")
     private int eovX;
 
-    @Min(value = MINIMUM_EOV_Y, message = "The minimum value of the x coordinate is " + MINIMUM_EOV_Y)
-    @Max(value = MAXIMUM_EOV_Y, message = "The maximum value of the x coordinate is " + MAXIMUM_EOV_Y)
-    @NotNull
+    @Min(value = MINIMUM_EOV_Y, message = "The minimum value of the y coordinate is " + MINIMUM_EOV_Y)
+    @Max(value = MAXIMUM_EOV_Y, message = "The maximum value of the y coordinate is " + MAXIMUM_EOV_Y)
+    @NotNull(message = "Y coordinate is required")
     @Schema(description = "Y coordinate in HD72/EOV (EPSG:23700) projection", example = "268376")
     private int eovY;
 }
