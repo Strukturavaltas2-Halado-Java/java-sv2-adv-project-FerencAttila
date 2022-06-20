@@ -1,21 +1,21 @@
 # Roller Nest Boxes
 Utolsó módosítás: 2022-06-20
 
-![Roller nestlingss in a nestbox](/img/roller.jpg)
+![Roller in natural lair](/img/roller.jpg)
 
 Andy Morffew [CC-BY-2.0](https://commons.wikimedia.org/wiki/Category:CC-BY-2.0)
 
 Az alkalmazás célja a szalakóta odúk nyilvántartásának kezelése, valamint a terepen gyűjtött információk
 rendszerezése. Az elmúlt évek során kiforrott kihelyezési és ellenőrzési stratégia adminisztrációjának
 egyszerűsítése mellett a gyakori hibákra tartalmaz validációkat. Az eddigi adatelemzések folyamatos
-naparakész megvalósítását API hívásokon keresztül is támogatja, illetve lehetővé teszi az adatok egyszerű
+naprakész megvalósítását API hívásokon keresztül is támogatja, illetve lehetővé teszi az adatok egyszerű
 integrálását a meglévő adattároló rendszerekben (Biotika).
 
 Az alkalmazás API felületén keresztül lehet feltölteni az új odúkihelyezéseket, valamint a költések
 ellenőrzése során gyűjtött adatokat.
 
-_A dokumentációban szereplő, alkalmazás által biztosított url-ek helyi gépen történő futtatás esetén
-érvényesek. A 'http://localhost:8080' rész helyett mindig az aktuális kiszolgáló url-jét és a
+_A dokumentációban szereplő, alkalmazás által biztosított URL-ek helyi gépen történő futtatás esetén
+érvényesek. A 'http://localhost:8080' rész helyett mindig az aktuális kiszolgáló URL-jét és a
 megfelelő portszámot kell behelyettesíteni._
 
 ![ER diagram of the database](/img/roller_nestboxes_database.jpg)
@@ -38,9 +38,9 @@ Az adatbázisban alkalmazott elvárások az egyes attribútumokkal kapcsolatban:
 A json állományokban előforduló kifejezések magyarázata:
 
 - nestBoxNumber: az odúra festett azonosító
-- coordinates: földrajzi koordínáták HD72/EOV (EPSG:23700) projekcióban
-    - eovX: x koordináta
-    - eovY: y koordináta
+- coordinates: földrajzi koordináták HD72/EOV (EPSG:23700) projekcióban
+  - eovX: x koordináta
+  - eovY: y koordináta
 - direction: az odú bejáratának iránya égtájak szerint
 - height: az odú helyének magassága a földfelszíntől, méterben
 
@@ -52,7 +52,7 @@ A json állományokban előforduló kifejezések magyarázata:
 | PUT          | `/api/nest-boxes`     | frissít egy odút `nestBoxNumber` alapján, a megadott paraméterekkel |
 | DELETE       | `/api/nest-boxes`     | töröl egy odút `nestBoxNumber` alapján                              |
 
-Példa url, bean validáció és mintadatok az egyes végpontokon:
+Példa URL, bean validáció és mintaadatok az egyes végpontokon:
 
 `/api/nest-boxes/all` (GET):
 
@@ -88,9 +88,9 @@ Response code: 200
 GET http://localhost:8080/api/nest-boxes?nest-box-number=1600
 
 - nestBoxNumber: az odúra festett azonosító
-- coordinates: földrajzi koordínáták HD72/EOV (EPSG:23700) projekcióban
-    - eovX: x koordináta
-    - eovY: y koordináta
+- coordinates: földrajzi koordináták HD72/EOV (EPSG:23700) projekcióban
+  - eovX: x koordináta
+  - eovY: y koordináta
 - direction: az odú bejáratának iránya égtájak szerint
 - height: az odú helyének magassága a földfelszíntől, méterben
 
@@ -112,7 +112,7 @@ Response code: 200
 
 POST http://localhost:8080/api/nest-boxes
 
-A koordinátákon lévő korlátozások miatt odút rögzíteni csak Magyarországot befogaló téglalpon belül lehet.
+A koordinátákon lévő korlátozások miatt odút rögzíteni csak Magyarországot befoglaló téglalapon belül lehet.
 Az újonnan felvett odú száma nem szerepelhet az adatbázisban. Odút csak 1 és 10 méter közötti magasságban
 lehet kihelyezni.
 
@@ -152,7 +152,7 @@ content:
     }
 
 accept:
-    
+
     {
     "nestBoxNumber": "1485",
     "coordinates": {
@@ -243,13 +243,13 @@ activity: a faj aktivitása, a projekt esetében mindig "fióka fészekben"
 surveyMethod: felmérési módazertan a projekt esetében mindig "szalakóta odúellenőrzés"
 collectionMethod: gyűjtési mód, a projekt esetében mindig "vizuális"
 
-| HTTPmetódus | Végpont             | Leírás                                                                                      |
-|-------------|---------------------|---------------------------------------------------------------------------------------------|
-| GET         | `/api/nests`        | lekérdezi az összes fészkelést, illetve odúszám és/vagy költő faj szerint szűr              |
-| GET         | `/api/zoology-data` | lekérdezi az összes fészkelkést, a zoológiai adatbázisnak megfelelő formátumban adja vissza |
-| POST        | `/api/nests`        | létrehoz egy fészkelést terepen gyűjtött adatok alapján                                     |                                                 |
+| HTTP metódus | Végpont             | Leírás                                                                                      |
+|--------------|---------------------|---------------------------------------------------------------------------------------------|
+| GET          | `/api/nests`        | lekérdezi az összes fészkelést, illetve odúszám és/vagy költő faj szerint szűr              |
+| GET          | `/api/zoology-data` | lekérdezi az összes fészkelést, a zoológiai adatbázisnak megfelelő formátumban adja vissza  |
+| POST         | `/api/nests`        | létrehoz egy fészkelést terepen gyűjtött adatok alapján                                     |                                                 |
 
-Példa url, bean validáció és mintadatok az egyes végpontokon:
+Példa URL, bean validáció és mintaadatok az egyes végpontokon:
 
 `/api/nests` (GET):
 
@@ -289,7 +289,6 @@ Response code: 200
 Fészkelések odúszám alapján szűrve (nagybetű érzékeny):
 
 GET http://localhost:8080/api/nests?nest-box-number=1485
-
 accept:
 
     [
@@ -431,7 +430,7 @@ A dátum nem lehet a jövőben és nem lehet üres.
 A fajnév hossza minimum 5, maximum 45 karakter lehet, de lehet üres abban az esetben, ha az ellenőrzés során  
 megállapítható, hogy nem volt költés az odúban.  
 A fiókák és/vagy tojások összege nem lehet negatív és nem lehet több, mint 20.
-Az adaközlő nem lehet üres, és a névnek minimum 5, maximum 100 karakterből kell állnia.
+Az adatközlő nem lehet üres, és a névnek minimum 5, maximum 100 karakterből kell állnia.
 
 nestBoxNumber (odúszám):
 - léteznie kell az adatbázisban
@@ -526,21 +525,24 @@ További alkalmazott könyvtárak, alkalmazások:
 ### Tesztelés
 
 A tesztesetek a JUnit 5.8.2 keretrendszeren alapulnak, de a legtöbb assert az assertJ 3.22.0 metódusait
-lkalmazza. Integrációs tesztek esetén a WebFlux technológiát alkalmaztam.
+alkalmazza. Integrációs tesztek esetén a WebFlux technológiát alkalmaztam.
 
 ### Adatbázis
 
 Az alkalmazás az adatokat MariaDb 10.8-as verzióján futó adatbázisba menti.
 Az adatbázis migrálását FlyWay 5.8.11 migrációs eszközzel valósítottam meg.
 
-### OpenApi documentáció
+### OpenApi dokumentáció
 
 Az API dokumentáció grafikus verziója a Swagger UI technológiát használja és az alkalmazás futtatásakor
 elérhető a http://localhost:8080/swagger-ui/index.html címen. Ehhez a Springdoc OpenApi UI 1.6.9-es
 verzióját használtam.
 
-A json openapi dokumentum a http://localhost:8080/v3/api-docs címen érhető el, szintén az alkalmazás
+A json OpenApi dokumentum a http://localhost:8080/v3/api-docs címen érhető el, szintén az alkalmazás
 futtatásakor.
+
+A Swagger felületen keresztül kipróbálható az alkalmazás, az itt kiadott parancsok hatására a production
+adatbázisban kerülnek elmentésre az adatok.
 
 ### Alkalmazás futtatása docker segítségével
 
@@ -556,3 +558,4 @@ konténer indul el. Egy a production adatbázis, amelyhez az alkalmazás  a
 alkalmazás alapértelmezetten docker futtatása esetén is a 8080-as porton keresztül érhető el.
 
 ![Roller in nest box](img/roller_in_nestbox_small.jpg)
+
