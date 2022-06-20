@@ -51,7 +51,7 @@ class NestBoxControllerIT {
     @Test
     void findNestBoxByNestBoxNumberTest() {
         client.get()
-                .uri(uriBuilder -> uriBuilder.path("/api/nest-boxes").queryParam("nest-box-number", "2256").build())
+                .uri(uriBuilder -> uriBuilder.path("/api/nest-boxes").queryParam("nest-box-number", "   2256    ").build())
                 .accept(MediaType.APPLICATION_JSON)
                 .exchange()
                 .expectStatus().isOk()
@@ -74,7 +74,7 @@ class NestBoxControllerIT {
     @Test
     void saveNestBoxTest() {
         NestBoxPuttingCommand command = new NestBoxPuttingCommand(
-                "2258",
+                "     2258    ",
                 new CoordinatesCommand(758962, 356123),
                 Quarter.SE,
                 5.5);
@@ -91,7 +91,7 @@ class NestBoxControllerIT {
     @Test
     void updateNestBoxParametersTest() {
         UpdateNestBoxCommand command = new UpdateNestBoxCommand(
-                "2256",
+                "     2256    ",
                 Quarter.NE,
                 6.5);
 
@@ -102,13 +102,14 @@ class NestBoxControllerIT {
                 .exchange()
                 .expectStatus().isOk()
                 .expectBody(NestBoxDto.class)
-                .value(NestBoxDto::getDirection, equalTo(Quarter.NE));
+                .value(NestBoxDto::getDirection, equalTo(Quarter.NE))
+                .value(NestBoxDto::getNestBoxNumber, equalTo("2256"));
     }
 
     @Test
     void deleteNestBoxTest() {
         client.delete()
-                .uri(uriBuilder -> uriBuilder.path("/api/nest-boxes").queryParam("nest-box-number", "1214").build())
+                .uri(uriBuilder -> uriBuilder.path("/api/nest-boxes").queryParam("nest-box-number", "     1214     ").build())
                 .exchange()
                 .expectStatus().isNoContent();
 

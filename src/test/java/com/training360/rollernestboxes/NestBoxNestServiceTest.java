@@ -5,6 +5,7 @@ import com.training360.rollernestboxes.nest.exceptions.SurveyIsNotUniqueExceptio
 import com.training360.rollernestboxes.nest.model.Nest;
 import com.training360.rollernestboxes.nest.repository.NestRepository;
 import com.training360.rollernestboxes.nestboxes.dtos.NestBoxDto;
+import com.training360.rollernestboxes.nestboxes.dtos.UpdateNestBoxCommand;
 import com.training360.rollernestboxes.nestboxes.exceptions.CannotDeleteNestBoxException;
 import com.training360.rollernestboxes.nestboxes.exceptions.NestBoxNotFoundException;
 import com.training360.rollernestboxes.nestboxes.mapper.NestBoxMapperImpl;
@@ -91,6 +92,18 @@ class NestBoxNestServiceTest {
     }
 
     @Test
+    void updateNestBoxNotInDatabaseTest() {
+        UpdateNestBoxCommand command = new UpdateNestBoxCommand("2560/a", Quarter.SW, 5);
+
+        when(nestBoxRepository.findNestBoxByNestBoxNumber("2560/a"))
+                .thenReturn(Optional.empty());
+
+        assertThatExceptionOfType(NestBoxNotFoundException.class)
+                .isThrownBy(() -> service.updateNestBoxParameters(command))
+                .withMessage("Nest box not found in the database: Nest box with nest box number 2560/a does not exists!");
+    }
+
+    @Test
     void saveNestIsNotUniqueTest() {
         SurveyCommand command = new SurveyCommand(
                 "2560/a",
@@ -108,6 +121,23 @@ class NestBoxNestServiceTest {
     }
 
     @Test
+    void saveNestInNestBoxNotInDatabaseTest() {
+        SurveyCommand command = new SurveyCommand(
+                "2560/a",
+                LocalDate.of(2021, 6, 14),
+                "Passer montanus",
+                0,
+                "John Doe");
+
+        when(nestBoxRepository.findNestBoxByNestBoxNumber("2560/a"))
+                .thenReturn(Optional.empty());
+
+        assertThatExceptionOfType(NestBoxNotFoundException.class)
+                .isThrownBy(() -> service.saveNest(command))
+                .withMessage("Nest box not found in the database: Nest box with nest box number 2560/a does not exists!");
+    }
+
+    @Test
     void cannotDeleteNestBoxTest() {
         nestBox.addNest(nest);
 
@@ -117,5 +147,15 @@ class NestBoxNestServiceTest {
         assertThatExceptionOfType(CannotDeleteNestBoxException.class)
                 .isThrownBy(() -> service.deleteNestBox("2560/a"))
                 .withMessage("Can not delete nest box: Nest box with number 2560/a has nests, thus it can not be deleted");
+    }
+
+    @Test
+    void deleteNestBoxNotInDatabaseTest() {
+        when(nestBoxRepository.findNestBoxByNestBoxNumber("2560/a"))
+                .thenReturn(Optional.empty());
+
+        assertThatExceptionOfType(NestBoxNotFoundException.class)
+                .isThrownBy(() -> service.deleteNestBox("2560/a"))
+                .withMessage("Nest box not found in the database: Nest box with nest box number 2560/a does not exists!");
     }
 }

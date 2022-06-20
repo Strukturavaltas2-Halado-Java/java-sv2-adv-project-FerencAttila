@@ -45,6 +45,8 @@ public class NestBoxNestService {
     }
 
     public List<NestDto> findNests(Optional<String> nestBoxNumber, Optional<String> species) {
+        nestBoxNumber = stripQueryParameters(nestBoxNumber);
+        species = stripQueryParameters(species);
         isNestBoxExistsWithNestBoxNumber(nestBoxNumber);
         return nestRepository.findAllNestsByNestBoxNumberAndSpecies(nestBoxNumber, species).stream()
                 .map(nest -> nestMapper.toNestDto(nest))
@@ -52,10 +54,9 @@ public class NestBoxNestService {
     }
 
     public NestBoxDto findNestBoxByNestBoxNumber(String nestBoxNumber) {
-        return nestBoxMapper.toNestBoxDto(nestBoxRepository.findNestBoxByNestBoxNumber(nestBoxNumber)
+        return nestBoxMapper.toNestBoxDto(nestBoxRepository.findNestBoxByNestBoxNumber(nestBoxNumber.strip())
                 .orElseThrow(() -> new NestBoxNotFoundException(nestBoxNumber)));
     }
-
     public List<ZoologyDataDto> getAllNestsAsZoologyData() {
         return nestRepository.findAll().stream()
                 .map(nest -> nestMapper.toZoologyDataDto(nest))
@@ -63,7 +64,7 @@ public class NestBoxNestService {
     }
 
     public NestBoxDto saveNestBox(NestBoxPuttingCommand command) {
-        NestBox nestBox = new NestBox(command.getNestBoxNumber(),
+        NestBox nestBox = new NestBox(command.getNestBoxNumber().strip(),
                 new Coordinates(command.getCoordinatesCommand().getEovX(),
                         command.getCoordinatesCommand().getEovY()),
                 command.getDirection(),
@@ -73,30 +74,37 @@ public class NestBoxNestService {
     }
 
     public NestDto saveNest(SurveyCommand command) {
-        checkIfNestIsUnique(command.getNestBoxNumber(), command.getDateOfSurvey(), command.getObserver());
-        NestBox nestBox = getNestBoxByNestBoxNumber(command.getNestBoxNumber());
+        checkIfNestIsUnique(command.getNestBoxNumber().strip(), command.getDateOfSurvey(), command.getObserver().strip());
+        NestBox nestBox = getNestBoxByNestBoxNumber(command.getNestBoxNumber().strip());
         Nest nest = new Nest(nestBox,
                 command.getDateOfSurvey(),
-                command.getSpecies(),
+                command.getSpecies().strip(),
                 command.getNumberOfNestlings(),
-                command.getObserver());
+                command.getObserver().strip());
         nestBox.addNest(nest);
         return nestMapper.toNestDto(nest);
     }
 
     public NestBoxDto updateNestBoxParameters(UpdateNestBoxCommand command) {
-        NestBox nestBox = getNestBoxByNestBoxNumber(command.getNestBoxNumber());
+        NestBox nestBox = getNestBoxByNestBoxNumber(command.getNestBoxNumber().strip());
         nestBox.setDirection(command.getDirection());
         nestBox.setHeight(command.getHeight());
         return nestBoxMapper.toNestBoxDto(nestBox);
     }
 
     public void deleteNestBox(String nestBoxNumber) {
-        NestBox nestBox = getNestBoxByNestBoxNumber(nestBoxNumber);
+        NestBox nestBox = getNestBoxByNestBoxNumber(nestBoxNumber.strip());
         if (isNestBoxHasNests(nestBox)) {
             throw new CannotDeleteNestBoxException(nestBoxNumber);
         }
         nestBoxRepository.delete(nestBox);
+    }
+
+    private Optional<String> stripQueryParameters(Optional<String> parameter) {
+        if (parameter.isPresent()) {
+            return Optional.of(parameter.get().strip());
+        }
+        return parameter;
     }
 
     private boolean isNestBoxHasNests(NestBox nestBox) {
@@ -120,7 +128,7 @@ public class NestBoxNestService {
     }
 
     private void isNestBoxExistsWithNestBoxNumber(Optional<String> nestBoxNumber) {
-        if (nestBoxNumber.isPresent() && !nestBoxRepository.existsNestBoxByNestBoxNumber(nestBoxNumber.get())) {
+        if (nestBoxNumber.isPresent() && !nestBoxRepository.existsNestBoxByNestBoxNumber(nestBoxNumber.get().strip())) {
             throw new NestBoxNotFoundException(nestBoxNumber.get());
         }
     }

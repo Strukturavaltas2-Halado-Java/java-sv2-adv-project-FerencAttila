@@ -22,7 +22,7 @@ public class NestController {
     private NestBoxNestService service;
 
     @GetMapping
-    @Operation(description = "Lists all nests, or list nests filtered by nest-box-number and/or nesting species.")
+    @Operation(description = "Lists all nests, or list nests filtered by nest-box-number (case-sensitive) and/or nesting species substring (not case-sensitive).")
     public List<NestDto> findNests(@RequestParam(name = "nest-box-number") Optional<String> nestBoxNumber,
                                    @RequestParam Optional<String> species) {
         return service.findNests(nestBoxNumber, species);

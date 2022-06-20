@@ -16,7 +16,7 @@ public class NestBoxIdDoesNotExistsValidator implements ConstraintValidator<Vali
     @Override
     public boolean isValid(String nestBoxNumber, ConstraintValidatorContext constraintValidatorContext) {
         boolean validSize = !nestBoxNumber.isBlank() && nestBoxNumber.strip().length() <= 10;
-        return validSize && !repository.existsNestBoxByNestBoxNumber(nestBoxNumber);
+        return validSize && !repository.existsNestBoxByNestBoxNumber(nestBoxNumber.strip());
     }
 
     @Override

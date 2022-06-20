@@ -26,7 +26,7 @@ class CustomNestBoxBeanValidationIT {
     @Test
     void NestBoxIdDoesNotExistsValidatorTest() {
         NestBoxPuttingCommand command = new NestBoxPuttingCommand();
-        command.setNestBoxNumber("2560/a");
+        command.setNestBoxNumber("   2560/a   ");
 
         when(repository.existsNestBoxByNestBoxNumber("2560/a"))
                 .thenReturn(true);
@@ -45,9 +45,85 @@ class CustomNestBoxBeanValidationIT {
     @Test
     void NestBoxIdExistsValidatorTest() {
         UpdateNestBoxCommand command = new UpdateNestBoxCommand();
-        command.setNestBoxNumber("2560/a");
+        command.setNestBoxNumber("   2560/a   ");
 
         when(repository.existsNestBoxByNestBoxNumber("2560/a"))
+                .thenReturn(false);
+
+        client.put()
+                .uri("/api/nest-boxes")
+                .bodyValue(command)
+                .exchange()
+                .expectStatus().isBadRequest()
+                .expectBody(Problem.class)
+                .value(Problem::getTitle, equalTo("Constraint Violation"))
+                .value(problem -> assertThat(problem.toString())
+                        .contains("Nest box id must be in the database, cannot be null or empty string and consists maximum of 10 characters!"));
+    }
+
+    @Test
+    void NestBoxIdDoesNotExistsValidatorWithBlankNestBoxNumberTest() {
+        NestBoxPuttingCommand command = new NestBoxPuttingCommand();
+        command.setNestBoxNumber("      ");
+
+        when(repository.existsNestBoxByNestBoxNumber(""))
+                .thenReturn(true);
+
+        client.post()
+                .uri("/api/nest-boxes")
+                .bodyValue(command)
+                .exchange()
+                .expectStatus().isBadRequest()
+                .expectBody(Problem.class)
+                .value(Problem::getTitle, equalTo("Constraint Violation"))
+                .value(problem -> assertThat(problem.toString())
+                        .contains("Nest box id must be unique, cannot be null or empty string and consists maximum of 10 characters!"));
+    }
+
+    @Test
+    void NestBoxIdExistsValidatorWithBlankNestBoxNumberTest() {
+        UpdateNestBoxCommand command = new UpdateNestBoxCommand();
+        command.setNestBoxNumber("      ");
+
+        when(repository.existsNestBoxByNestBoxNumber(""))
+                .thenReturn(false);
+
+        client.put()
+                .uri("/api/nest-boxes")
+                .bodyValue(command)
+                .exchange()
+                .expectStatus().isBadRequest()
+                .expectBody(Problem.class)
+                .value(Problem::getTitle, equalTo("Constraint Violation"))
+                .value(problem -> assertThat(problem.toString())
+                        .contains("Nest box id must be in the database, cannot be null or empty string and consists maximum of 10 characters!"));
+    }
+
+    @Test
+    void NestBoxIdDoesNotExistsValidatorWithLongNestBoxNumberTest() {
+        NestBoxPuttingCommand command = new NestBoxPuttingCommand();
+        command.setNestBoxNumber("   123456789012   ");
+
+        when(repository.existsNestBoxByNestBoxNumber("123456789012"))
+                .thenReturn(true);
+
+        client.post()
+                .uri("/api/nest-boxes")
+                .bodyValue(command)
+                .exchange()
+                .expectStatus().isBadRequest()
+                .expectBody(Problem.class)
+                .value(Problem::getTitle, equalTo("Constraint Violation"))
+                .value(problem -> assertThat(problem.toString())
+                        .contains("Nest box id must be unique, cannot be null or empty string and consists maximum of 10 characters!"));
+    }
+
+    @Test
+    void NestBoxIdExistsValidatorWithLongNestBoxNumberTest() {
+        UpdateNestBoxCommand command = new UpdateNestBoxCommand();
+        command.setNestBoxNumber("   123456789012   ");
+
+        when(repository.existsNestBoxByNestBoxNumber("123456789012"))
                 .thenReturn(false);
 
         client.put()

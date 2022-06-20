@@ -17,7 +17,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @Sql(statements = {"delete from nests", "delete from nest_boxes"})
-class UpdateNestBoxWithInvalidDataTest {
+class UpdateNestBoxWithInvalidDataIT {
 
     @Autowired
     WebTestClient client;

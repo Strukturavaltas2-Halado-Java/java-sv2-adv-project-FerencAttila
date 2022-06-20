@@ -32,7 +32,7 @@ GET http://localhost:8080/api/nests?nest-box-number=1600&species=Coracias%20garr
 Accept: application/json
 
 ###
-GET http://localhost:8080/api/nests?species=Corvus%20monedula
+GET http://localhost:8080/api/nests?species=COR
 Accept: application/json
 
 ###

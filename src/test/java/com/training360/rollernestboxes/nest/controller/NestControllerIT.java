@@ -51,7 +51,7 @@ class NestControllerIT {
     void findAllNestsInGivenNestBoxTest() {
         client.get()
                 .uri(uriBuilder -> uriBuilder.path("/api/nests")
-                        .queryParam("nest-box-number", "1742/A")
+                        .queryParam("nest-box-number", "   1742/A   ")
                         .build())
                 .accept(MediaType.APPLICATION_JSON)
                 .exchange()
@@ -64,10 +64,10 @@ class NestControllerIT {
     }
 
     @Test
-    void findAllNestsByGivenSpeciesTest() {
+    void findAllNestsByGivenSpeciesSubstringNotCaseSensitiveTest() {
         client.get()
                 .uri(uriBuilder -> uriBuilder.path("/api/nests")
-                        .queryParam("species", "Coracias garrulus")
+                        .queryParam("species", "    CORA  ")
                         .build())
                 .accept(MediaType.APPLICATION_JSON)
                 .exchange()
@@ -80,11 +80,11 @@ class NestControllerIT {
     }
 
     @Test
-    void findAllNestsInGivenNestBoxByGivenSpeciesTest() {
+    void findAllNestsInGivenNestBoxByGivenSpeciesSubstringTest() {
         client.get()
                 .uri(uriBuilder -> uriBuilder.path("/api/nests")
-                        .queryParam("nest-box-number", "1742/A")
-                        .queryParam("species", "Coracias garrulus")
+                        .queryParam("nest-box-number", " 1742/A   ")
+                        .queryParam("species", " GARRULUS  ")
                         .build())
                 .accept(MediaType.APPLICATION_JSON)
                 .exchange()
@@ -120,11 +120,11 @@ class NestControllerIT {
     @Test
     void saveNestTest() {
         SurveyCommand command = new SurveyCommand(
-                "1547/c",
+                "    1547/c    ",
                 LocalDate.of(2021,6,14),
-                "Passer montanus",
+                "  Passer montanus   ",
                 0,
-                "John Doe");
+                "  John Doe  ");
 
         client.post()
                 .uri("/api/nests")
@@ -133,6 +133,50 @@ class NestControllerIT {
                 .exchange()
                 .expectStatus().isCreated()
                 .expectBody(NestDto.class)
-                .value(NestDto::getNestBoxNumber, equalTo("1547/c"));
+                .value(NestDto::getNestBoxNumber, equalTo("1547/c"))
+                .value(NestDto::getSpecies, equalTo("Passer montanus"))
+                .value(NestDto::getObserver, equalTo("John Doe"));
+    }
+
+    @Test
+    void canSaveNestOnSameDateWithAnotherObserverInSameNestBoxTest() {
+        SurveyCommand command = new SurveyCommand(
+                "    1547/c    ",
+                LocalDate.of(2022,6,16),
+                "  Coracias garrulus   ",
+                4,
+                "  Jack Doe  ");
+
+        client.post()
+                .uri("/api/nests")
+                .bodyValue(command)
+                .accept(MediaType.APPLICATION_JSON)
+                .exchange()
+                .expectStatus().isCreated()
+                .expectBody(NestDto.class)
+                .value(NestDto::getNestBoxNumber, equalTo("1547/c"))
+                .value(NestDto::getSpecies, equalTo("Coracias garrulus"))
+                .value(NestDto::getObserver, equalTo("Jack Doe"));
+    }
+
+    @Test
+    void canSaveNestOnAnotherDateWithSameObserverInSameNestBoxTest() {
+        SurveyCommand command = new SurveyCommand(
+                "    1547/c    ",
+                LocalDate.of(2021,6,16),
+                "  Coracias garrulus   ",
+                4,
+                "  John Doe  ");
+
+        client.post()
+                .uri("/api/nests")
+                .bodyValue(command)
+                .accept(MediaType.APPLICATION_JSON)
+                .exchange()
+                .expectStatus().isCreated()
+                .expectBody(NestDto.class)
+                .value(NestDto::getNestBoxNumber, equalTo("1547/c"))
+                .value(NestDto::getSpecies, equalTo("Coracias garrulus"))
+                .value(NestDto::getObserver, equalTo("John Doe"));
     }
 }

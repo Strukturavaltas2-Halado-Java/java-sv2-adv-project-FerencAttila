@@ -58,6 +58,14 @@ class NestRepositoryIT {
     }
 
     @Test
+    void findAllBySpeciesSubstringNotCaseSensitiveTest() {
+        assertThat(nestRepository.findAllNestsByNestBoxNumberAndSpecies(Optional.empty(), Optional.of("cor")))
+                .hasSize(4)
+                .extracting(Nest::getSpecies)
+                .containsOnly("Corvus monedula", "Coracias garrulus");
+    }
+
+    @Test
     void findAllNestsByNestBoxNumberAndSpeciesTest() {
         assertThat(nestRepository.findAllNestsByNestBoxNumberAndSpecies(Optional.of("1742/A"), Optional.of("Coracias garrulus")))
                 .hasSize(2)

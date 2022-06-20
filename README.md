@@ -112,6 +112,10 @@ Response code: 200
 
 POST http://localhost:8080/api/nest-boxes
 
+A koordinátákon lévő korlátozások miatt odút rögzíteni csak Magyarországot befogaló téglalpon belül lehet.
+Az újonnan felvett odú száma nem szerepelhet az adatbázisban. Odút csak 1 és 10 méter közötti magasságban
+lehet kihelyezni.
+
 nestBoxNumber:
 - egyedi (adatbázisban nem szerepelhet),
 - nem lehet üres és null
@@ -164,6 +168,10 @@ Response code: 201
 `/api/nest-boxes` (PUT):
 
 PUT http://localhost:8080/api/nest-boxes
+
+Amennyiben az odút az adott odútartón (fa, oszlop) másik helyre tesszük át, lehetőség van frissíteni az odú
+adatait. Ekkor változhat az odú tájolása és magassága, ezeket a kihelyezésre vonatkozó szabályok betartásával
+lehet módosítani az adatbázisban.
 
 nestBoxNumber:
 - egyedi (adatbázisban nem szerepelhet),
@@ -278,7 +286,7 @@ accept:
 
 Response code: 200
 
-Fészkelések odúszám alapján szűrve:
+Fészkelések odúszám alapján szűrve (nagybetű érzékeny):
 
 GET http://localhost:8080/api/nests?nest-box-number=1485
 
@@ -311,7 +319,7 @@ accept:
 
 Response code: 200
 
-Fészkelések faj alapján szűrve:
+Fészkelések fajnév vagy annak egy részlete alapján szűrve (nem nagybetű érzékeny):
 
 GET http://localhost:8080/api/nests?species=Corvus%20monedula
 
@@ -342,7 +350,9 @@ GET http://localhost:8080/api/nests?species=Corvus%20monedula
 
 Response code: 200
 
-Fészkelések odúszám és faj alapján szűrve:
+Fészkelések odúszám és fajnév vagy annak egy részlete alapján szűrve:
+
+A fenti két szűrő kombinálása, az odúszám keresője nagybetű-érzékeny, míg a fajnév keresője nem az.
 
 GET http://localhost:8080/api/nests?nest-box-number=1485&species=Corvus%20monedula
 
@@ -415,7 +425,13 @@ Response code: 200
 POST http://localhost:8080/api/nests
 
 Nem tölthető fel olyan fészkelés, ahol az odúszám, a dátum és az adatközlő kombinációja megegyezik egy,
-már az adatbázisban szereplő rekorddal. 
+már az adatbázisban szereplő rekorddal.  
+A fészkelési adathoz tartozó odúszámnak szerepelni kell az adatbázisban.  
+A dátum nem lehet a jövőben és nem lehet üres.  
+A fajnév hossza minimum 5, maximum 45 karakter lehet, de lehet üres abban az esetben, ha az ellenőrzés során  
+megállapítható, hogy nem volt költés az odúban.  
+A fiókák és/vagy tojások összege nem lehet negatív és nem lehet több, mint 20.
+Az adaközlő nem lehet üres, és a névnek minimum 5, maximum 100 karakterből kell állnia.
 
 nestBoxNumber (odúszám):
 - léteznie kell az adatbázisban
@@ -470,6 +486,17 @@ Response code: 201
 Az alkalmazás egy tipikus három rétegű alkalmazás, amely két controller rétegen keresztül valósítja meg a
 kommunikációt. Az innen érkező adatok egyetlen service rétegben találkoznak, ahol az üzleti logika valósul
 meg. A két entitás önálló repository rétegeken keresztül csatlakozik a MariaDB adatbázishoz.
+
+A középső, service réteg az alábbi funkciókat tartalmazza:
+
+- Konvertálás az entitások és a dto-k között.
+- Beérkezett odúszám ellenőrzése az adatbázisban:
+  - Odú kihelyezésénél nem kerülhet be odú már meglévő számmal.
+  - Odú adatainak módosításánál, fészkelés regisztrálásakor az odúszámnak szerepelnie kell az adatbázisban.
+- Ellenőrzi egy beérkezett fészkelési adat rögzítését megelőzően, hogy az odúnál azon a napon az az adatközlő
+rögzített-e már adatot. Ezáltal elkerülhető egy-egy adat többszöri rögzítése.
+- Odú törlése esetén ellenőrzi, hogy az adott odúhoz rögzítettek-e már fészkelést. Amennyiben igen, az odú
+törlése nem lehetséges.
 
 ### Spring keretrendszer
 
