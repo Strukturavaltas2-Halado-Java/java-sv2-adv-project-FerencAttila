@@ -1,9 +1,8 @@
 # Roller Nest Boxes
-Utolsó módosítás: 2022-06-20
+<sub><sup>Utolsó módosítás: 2022-06-20</sub></sup>
 
 ![Roller in natural lair](/img/roller.jpg)
-
-Andy Morffew [CC-BY-2.0](https://commons.wikimedia.org/wiki/Category:CC-BY-2.0)
+<sub><sup>Andy Morffew [CC-BY-2.0](https://commons.wikimedia.org/wiki/Category:CC-BY-2.0)</sub></sup>
 
 Az alkalmazás célja a szalakóta odúk nyilvántartásának kezelése, valamint a terepen gyűjtött információk
 rendszerezése. Az elmúlt évek során kiforrott kihelyezési és ellenőrzési stratégia adminisztrációjának
@@ -558,4 +557,5 @@ konténer indul el. Egy a production adatbázis, amelyhez az alkalmazás  a
 alkalmazás alapértelmezetten docker futtatása esetén is a 8080-as porton keresztül érhető el.
 
 ![Roller in nest box](img/roller_in_nestbox_small.jpg)
+&copy;<sub><sup> Széles Tamás</sup></sub>
 
