@@ -16,6 +16,7 @@ import org.springframework.test.web.reactive.server.WebTestClient;
 import java.time.LocalDate;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.tuple;
 import static org.hamcrest.Matchers.equalTo;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
@@ -92,12 +93,8 @@ class NestControllerIT {
                 .expectBodyList(NestDto.class)
                 .value(list -> assertThat(list)
                         .hasSize(2)
-                        .extracting(NestDto::getSpecies)
-                        .containsOnly("Coracias garrulus"))
-                .value(list -> assertThat(list)
-                        .hasSize(2)
-                        .extracting(NestDto::getNestBoxNumber)
-                        .containsOnly("1742/A"));
+                        .extracting(NestDto::getSpecies, NestDto::getNestBoxNumber)
+                        .containsOnly(tuple("Coracias garrulus", "1742/A")));
     }
 
     @Test
@@ -133,9 +130,7 @@ class NestControllerIT {
                 .exchange()
                 .expectStatus().isCreated()
                 .expectBody(NestDto.class)
-                .value(NestDto::getNestBoxNumber, equalTo("1547/c"))
-                .value(NestDto::getSpecies, equalTo("Passer montanus"))
-                .value(NestDto::getObserver, equalTo("John Doe"));
+                .value(NestDto::getNestBoxNumber, equalTo("1547/c"));
     }
 
     @Test
@@ -154,8 +149,6 @@ class NestControllerIT {
                 .exchange()
                 .expectStatus().isCreated()
                 .expectBody(NestDto.class)
-                .value(NestDto::getNestBoxNumber, equalTo("1547/c"))
-                .value(NestDto::getSpecies, equalTo("Coracias garrulus"))
                 .value(NestDto::getObserver, equalTo("Jack Doe"));
     }
 
@@ -175,8 +168,6 @@ class NestControllerIT {
                 .exchange()
                 .expectStatus().isCreated()
                 .expectBody(NestDto.class)
-                .value(NestDto::getNestBoxNumber, equalTo("1547/c"))
-                .value(NestDto::getSpecies, equalTo("Coracias garrulus"))
-                .value(NestDto::getObserver, equalTo("John Doe"));
+                .value(NestDto::getDateOfSurvey, equalTo(LocalDate.of(2021,6,16)));
     }
 }
