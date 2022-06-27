@@ -1,3 +1,525 @@
+GET http://localhost:8080/api/nests/zoology-data
+Accept: application/json
+
+<> 2022-06-27T061846.200.json
+
+###
+
+GET http://localhost:8080/api/nests
+Accept: application/json
+
+<> 2022-06-27T061834.200.json
+
+###
+
+GET http://localhost:8080/api/nests?species=COR
+Accept: application/json
+
+<> 2022-06-27T061824.200.json
+
+###
+
+GET http://localhost:8080/api/nests?nest-box-number=1600&species=Coracias garrulus
+Accept: application/json
+
+<> 2022-06-27T061810.200.json
+
+###
+
+POST http://localhost:8080/api/nests
+Accept: application/json
+Content-Type: application/json
+
+{
+"nestBoxNumber": "1600",
+"dateOfSurvey": "2019-07-18",
+"species": "Coracias garrulus",
+"numberOfNestlings": 4,
+"observer": "John Doe"
+}
+
+<> 2022-06-27T061806.201.json
+
+###
+
+POST http://localhost:8080/api/nests
+Accept: application/json
+Content-Type: application/json
+
+{
+"nestBoxNumber": "1600",
+"dateOfSurvey": "2018-07-18",
+"species": "Coracias garrulus",
+"numberOfNestlings": 4,
+"observer": "John Doe"
+}
+
+<> 2022-06-27T061753.201.json
+
+###
+
+GET http://localhost:8080/api/nests?nest-box-number=1600
+Accept: application/json
+
+<> 2022-06-27T061718.200.json
+
+###
+
+POST http://localhost:8080/api/nests
+Accept: application/json
+Content-Type: application/json
+
+{
+"nestBoxNumber": "1600",
+"dateOfSurvey": "2018-06-18",
+"species": "Corvus monedula",
+"numberOfNestlings": 4,
+"observer": "John Doe"
+}
+
+<> 2022-06-27T061702.201.json
+
+###
+
+POST http://localhost:8080/api/nests
+Accept: application/json
+Content-Type: application/json
+
+{
+"nestBoxNumber": "1600",
+"dateOfSurvey": "2017-06-18",
+"species": "Corvus monedula",
+"numberOfNestlings": 4,
+"observer": "John Doe"
+}
+
+<> 2022-06-27T061322.201.json
+
+###
+
+POST http://localhost:8080/api/nests
+Accept: application/json
+Content-Type: application/json
+
+{
+  "nestBoxNumber": "1578/c",
+  "dateOfSurvey": "2019-06-18",
+  "species": "Coracias garrulus",
+  "numberOfNestlings": 4,
+  "observer": "John Doe"
+}
+
+<> 2022-06-27T061305.201.json
+
+###
+
+GET http://localhost:8080/api/nest-boxes/all
+Accept: application/json
+
+<> 2022-06-27T061237.200.json
+
+###
+
+PUT http://localhost:8080/api/nest-boxes
+Accept: application/json
+Content-Type: application/json
+
+{
+  "nestBoxNumber": "1600",
+  "direction": "NE",
+  "height": 6.5
+}
+
+<> 2022-06-27T061223.200.json
+
+###
+
+POST http://localhost:8080/api/nest-boxes
+Accept: application/json
+Content-Type: application/json
+
+{
+  "nestBoxNumber": "1600",
+  "coordinates": {
+    "eovX": 758615,
+    "eovY": 257498
+  },
+  "direction": "N",
+  "height": 3.5
+}
+
+<> 2022-06-27T061217.201.json
+
+###
+
+DELETE http://localhost:8080/api/nest-boxes?nest-box-number=1600
+
+###
+
+GET http://localhost:8080/api/nest-boxes/all
+Accept: application/json
+
+<> 2022-06-27T061146.200.json
+
+###
+
+GET http://localhost:8080/api/nest-boxes?nest-box-number=1600
+Accept: application/json
+
+<> 2022-06-27T061142.200.json
+
+###
+
+PUT http://localhost:8080/api/nest-boxes
+Accept: application/json
+Content-Type: application/json
+
+{
+  "nestBoxNumber": "1600",
+  "direction": "NE",
+  "height": 6.5
+}
+
+<> 2022-06-27T061126.200.json
+
+###
+
+PUT http://localhost:8080/api/nest-boxes
+Accept: application/json
+Content-Type: application/json
+
+{
+  "nestBoxNumber": "1578/c",
+  "direction": "NE",
+  "height": 6.5
+}
+
+<> 2022-06-27T061110.200.json
+
+###
+
+GET http://localhost:8080/api/nest-boxes?nest-box-number=1600
+Accept: application/json
+
+<> 2022-06-27T061026.200.json
+
+###
+
+PUT http://localhost:8080/api/nest-boxes
+Accept: application/json
+Content-Type: application/json
+
+{
+  "nestBoxNumber": "1578/c",
+  "direction": "NE",
+  "height": 6.5
+}
+
+<> 2022-06-27T061008.200.json
+
+###
+
+POST http://localhost:8080/api/nest-boxes
+Accept: application/json
+Content-Type: application/json
+
+{
+  "nestBoxNumber": "1600",
+  "coordinates": {
+    "eovX": 758615,
+    "eovY": 257498
+  },
+  "direction": "N",
+  "height": 3.5
+}
+
+<> 2022-06-27T060944.201.json
+
+###
+
+POST http://localhost:8080/api/nest-boxes
+Accept: application/json
+Content-Type: application/json
+
+{
+  "nestBoxNumber": "1578/c",
+  "coordinates": {
+    "eovX": 758615,
+    "eovY": 257498
+  },
+  "direction": "N",
+  "height": 3.5
+}
+
+<> 2022-06-27T060927.400.json
+
+###
+
+PUT http://localhost:8080/api/nest-boxes
+Accept: application/json
+Content-Type: application/json
+
+{
+  "nestBoxNumber": "1578/c",
+  "direction": "NE",
+  "height": 6.5
+}
+
+<> 2022-06-25T083147.200.json
+
+###
+
+PUT http://localhost:8080/api/nest-boxes
+Accept: application/json
+Content-Type: application/json
+
+{
+  "nestBoxNumber": "1600",
+  "direction": "NE",
+  "height": 6.5
+}
+
+<> 2022-06-25T083123.400.json
+
+###
+
+POST http://localhost:8080/api/nest-boxes
+Accept: application/json
+Content-Type: application/json
+
+{
+  "nestBoxNumber": "1578/c",
+  "coordinatesCommand": {
+    "eovX": 758615,
+    "eovY": 257498
+  },
+  "direction": "N",
+  "height": 3.5
+}
+
+<> 2022-06-25T083115.201.json
+
+###
+
+POST http://localhost:8080/api/nests
+Accept: application/json
+Content-Type: application/json
+
+{
+  "nestBoxNumber": "1578/c",
+  "dateOfSurvey": "2019-06-18",
+  "species": "Coracias garrulus",
+  "numberOfNestlings": 4,
+  "observer": "John Doe"
+}
+
+<> 2022-06-25T083057.400.json
+
+###
+
+GET http://localhost:8080/api/nests?species=COR
+Accept: application/json
+
+<> 2022-06-20T064210.200.json
+
+###
+
+GET http://localhost:8080/api/nests?species=COR
+Accept: application/json
+
+<> 2022-06-20T064157.200.json
+
+###
+
+GET http://localhost:8080/api/nests?species=cor
+Accept: application/json
+
+<> 2022-06-20T064147.200.json
+
+###
+
+GET http://localhost:8080/api/nests?species=Cor
+Accept: application/json
+
+<> 2022-06-20T055319.200.json
+
+###
+
+GET http://localhost:8080/api/nests?species=Corvus monedula
+Accept: application/json
+
+<> 2022-06-20T055301.200.json
+
+###
+
+GET http://localhost:8080/api/nests/zoology-data
+Accept: application/json
+
+<> 2022-06-19T215555.200.json
+
+###
+
+GET http://localhost:8080/api/nests
+Accept: application/json
+
+<> 2022-06-19T215551.200.json
+
+###
+
+GET http://localhost:8080/api/nests
+Accept: application/json
+
+<> 2022-06-19T215534.200.json
+
+###
+
+GET http://localhost:8080/api/nests?species=Corvus monedula
+Accept: application/json
+
+<> 2022-06-19T215527.200.json
+
+###
+
+GET http://localhost:8080/api/nests?nest-box-number=1600&species=Coracias garrulus
+Accept: application/json
+
+<> 2022-06-19T215520.200.json
+
+###
+
+GET http://localhost:8080/api/nests?nest-box-number=1485&species=Coracias garrulus
+Accept: application/json
+
+<> 2022-06-19T215510.400.json
+
+###
+
+GET http://localhost:8080/api/nests?nest-box-number=1600
+Accept: application/json
+
+<> 2022-06-19T215501.200.json
+
+###
+
+GET http://localhost:8080/api/nests?nest-box-number=1485
+Accept: application/json
+
+<> 2022-06-19T215438.400.json
+
+###
+
+POST http://localhost:8080/api/nests
+Accept: application/json
+Content-Type: application/json
+
+{
+"nestBoxNumber": "1600",
+"dateOfSurvey": "2017-06-18",
+"species": "Corvus monedula",
+"numberOfNestlings": 4,
+"observer": "John Doe"
+}
+
+<> 2022-06-19T215430.400.json
+
+###
+
+POST http://localhost:8080/api/nests
+Accept: application/json
+Content-Type: application/json
+
+{
+  "nestBoxNumber": "1578/c",
+  "dateOfSurvey": "2019-06-18",
+  "species": "Coracias garrulus",
+  "numberOfNestlings": 4,
+  "observer": "John Doe"
+}
+
+<> 2022-06-19T215423.400.json
+
+###
+
+GET http://localhost:8080/api/nest-boxes/all
+Accept: application/json
+
+<> 2022-06-19T215350.200.json
+
+###
+
+GET http://localhost:8080/api/nest-boxes?nest-box-number=1600
+Accept: application/json
+
+<> 2022-06-19T215331.200.json
+
+###
+
+PUT http://localhost:8080/api/nest-boxes
+Accept: application/json
+Content-Type: application/json
+
+{
+  "nestBoxNumber": "1600",
+  "direction": "NE",
+  "height": 6.5
+}
+
+<> 2022-06-19T215327.200.json
+
+###
+
+POST http://localhost:8080/api/nest-boxes
+Accept: application/json
+Content-Type: application/json
+
+{
+  "nestBoxNumber": "1578/c",
+  "coordinatesCommand": {
+    "eovX": 758615,
+    "eovY": 257498
+  },
+  "direction": "N",
+  "height": 3.5
+}
+
+<> 2022-06-19T215321.400.json
+
+###
+
+POST http://localhost:8080/api/nest-boxes
+Accept: application/json
+Content-Type: application/json
+
+{
+  "nestBoxNumber": "1578/c",
+  "coordinatesCommand": {
+    "eovX": 758615,
+    "eovY": 257498
+  },
+  "direction": "N",
+  "height": 3.5
+}
+
+###
+
+POST http://localhost:8080/api/nest-boxes
+Accept: application/json
+Content-Type: application/json
+
+{
+  "nestBoxNumber": "1578/c",
+  "coordinatesCommand": {
+    "eovX": 758615,
+    "eovY": 257498
+  },
+  "direction": "N",
+  "height": 3.5
+}
+
+<> 2022-06-19T120849.400.json
+
+###
+
 POST http://localhost:8080/api/nests
 Accept: application/json
 Content-Type: application/json
@@ -32,517 +554,6 @@ GET http://localhost:8080/api/nests/zoology-data
 Accept: application/json
 
 <> 2022-06-18T205805.200.json
-
-###
-
-POST http://localhost:8080/api/nests
-Accept: application/json
-Content-Type: application/json
-
-{
-  "nestBoxNumber": "1578/c",
-  "dateOfSurvey": "2019-06-18",
-  "species": "Coracias garrulus",
-  "numberOfNestlings": 4,
-  "observer": "John Doe"
-}
-
-<> 2022-06-18T205759.201.json
-
-###
-
-POST http://localhost:8080/api/nests
-Accept: application/json
-Content-Type: application/json
-
-{
-  "nestBoxNumber": "1485",
-  "dateOfSurvey": "2019-06-18",
-  "species": "Coracias garrulus",
-  "numberOfNestlings": 4,
-  "observer": "John Doe"
-}
-
-<> 2022-06-18T205726.400.json
-
-###
-
-POST http://localhost:8080/api/nests
-Accept: application/json
-Content-Type: application/json
-
-{
-"nestBoxNumber": "1600",
-"dateOfSurvey": "2015-06-18",
-"species": "Corvus monedula",
-"numberOfNestlings": 4,
-"observer": "John Doe"
-}
-
-<> 2022-06-18T205720.201.json
-
-###
-
-POST http://localhost:8080/api/nests
-Accept: application/json
-Content-Type: application/json
-
-{
-"nestBoxNumber": "1600",
-"dateOfSurvey": "2015-06-18",
-"species": "Corvus monedula",
-"numberOfNestlings": 4,
-"observer": "John Doe"
-}
-
-<> 2022-06-18T205414.500.json
-
-###
-
-POST http://localhost:8080/api/nest-boxes
-Accept: application/json
-Content-Type: application/json
-
-{
-  "nestBoxNumber": "1578/c",
-  "coordinatesCommand": {
-    "eovX": 758615,
-    "eovY": 257498
-  },
-  "direction": "N",
-  "height": 3.5
-}
-
-<> 2022-06-18T205406.201.json
-
-###
-
-POST http://localhost:8080/api/nest-boxes
-Accept: application/json
-Content-Type: application/json
-
-{
-  "nestBoxNumber": "1600",
-  "coordinatesCommand": {
-    "eovX": 758615,
-    "eovY": 257498
-  },
-  "direction": "N",
-  "height": 3.5
-}
-
-<> 2022-06-18T205349.201.json
-
-###
-
-GET http://localhost:8080/api/nests/zoology-data
-Accept: application/json
-
-<> 2022-06-18T204727.200.json
-
-###
-
-GET http://localhost:8080/api/nests?nest-box-number=1485&species=Coracias garrulus
-Accept: application/json
-
-<> 2022-06-18T195752.200.json
-
-###
-
-GET http://localhost:8080/api/nests?nest-box-number=1485&species=Coracias garrulus
-Accept: application/json
-
-<> 2022-06-18T195745.200.json
-
-###
-
-GET http://localhost:8080/api/nests?nest-box-number=1485&species=Corvus monedula
-Accept: application/json
-
-<> 2022-06-18T195725.200.json
-
-###
-
-GET http://localhost:8080/api/nests?nest-box-number=1485&species=Corvus monedula
-Accept: application/json
-
-<> 2022-06-18T195712.200.json
-
-###
-
-GET http://localhost:8080/api/nests?species=Corvus monedula
-Accept: application/json
-
-<> 2022-06-18T195516.200.json
-
-###
-
-GET http://localhost:8080/api/nests?nest-box-number=1485&species=Corvus monedula
-Accept: application/json
-
-<> 2022-06-18T195456.200.json
-
-###
-
-GET http://localhost:8080/api/nests?nest-box-number=2568&species=Corvus monedula
-Accept: application/json
-
-<> 2022-06-18T195442.400.json
-
-###
-
-POST http://localhost:8080/api/nests
-Accept: application/json
-Content-Type: application/json
-
-{
-"nestBoxNumber": "1600",
-"dateOfSurvey": "2015-06-18",
-"species": "Corvus monedula",
-"numberOfNestlings": 4,
-"observer": "John Doe"
-}
-
-<> 2022-06-18T195349.201.json
-
-###
-
-POST http://localhost:8080/api/nest-boxes
-Accept: application/json
-Content-Type: application/json
-
-{
-  "nestBoxNumber": "1600",
-  "coordinatesCommand": {
-    "eovX": 758615,
-    "eovY": 257498
-  },
-  "direction": "N",
-  "height": 3.5
-}
-
-<> 2022-06-18T195336.201.json
-
-###
-
-POST http://localhost:8080/api/nests
-Accept: application/json
-Content-Type: application/json
-
-{
-  "nestBoxNumber": "1485",
-  "dateOfSurvey": "2019-06-18",
-  "species": "Coracias garrulus",
-  "numberOfNestlings": 4,
-  "observer": "John Doe"
-}
-
-<> 2022-06-18T195224.201.json
-
-###
-
-GET http://localhost:8080/api/nests?nest-box-number=1485
-Accept: application/json
-
-<> 2022-06-18T195107.200.json
-
-###
-
-GET http://localhost:8080/api/nests
-Accept: application/json
-
-<> 2022-06-18T194826.200.json
-
-###
-
-POST http://localhost:8080/api/nests
-Accept: application/json
-Content-Type: application/json
-
-{
-  "nestBoxNumber": "1485",
-  "dateOfSurvey": "2022-06-18",
-  "species": "Coracias garrulus",
-  "numberOfNestlings": 4,
-  "observer": "John Doe"
-}
-
-<> 2022-06-18T194821.201.json
-
-###
-
-GET http://localhost:8080/api/nests
-Accept: application/json
-
-<> 2022-06-18T194810.200.json
-
-###
-
-POST http://localhost:8080/api/nests
-Accept: application/json
-Content-Type: application/json
-
-{
-"nestBoxNumber": "1485",
-"dateOfSurvey": "2015-06-18",
-"species": "Corvus monedula",
-"numberOfNestlings": 4,
-"observer": "John Doe"
-}
-
-<> 2022-06-18T192030.400.json
-
-###
-
-POST http://localhost:8080/api/nests
-Accept: application/json
-Content-Type: application/json
-
-{
-"nestBoxNumber": "1485",
-"dateOfSurvey": "2015-06-18",
-"species": "Corvus monedula",
-"numberOfNestlings": 4,
-"observer": "John Doe"
-}
-
-<> 2022-06-18T190942.201.json
-
-###
-
-DELETE http://localhost:8080/api/nest-boxes?nest-box-number=1600
-
-###
-
-PUT http://localhost:8080/api/nest-boxes
-Accept: application/json
-Content-Type: application/json
-
-{
-  "nestBoxNumber": "1600",
-  "direction": "NE",
-  "height": 6.5
-}
-
-<> 2022-06-18T184342.200.json
-
-###
-
-GET http://localhost:8080/api/nest-boxes?nest-box-number=1600
-Accept: application/json
-
-<> 2022-06-18T184126.200.json
-
-###
-
-GET http://localhost:8080/api/nest-boxes/all
-Accept: application/json
-
-<> 2022-06-18T182608.200.json
-
-###
-
-POST http://localhost:8080/api/nest-boxes
-Accept: application/json
-Content-Type: application/json
-
-{
-  "nestBoxNumber": "1485",
-  "coordinatesCommand": {
-    "eovX": 758615,
-    "eovY": 257498
-  },
-  "direction": "N",
-  "height": 3.5
-}
-
-<> 2022-06-18T182531.201.json
-
-###
-
-POST http://localhost:8080/api/nest-boxes
-Accept: application/json
-Content-Type: application/json
-
-{
-  "nestBoxNumber": "1600",
-  "coordinatesCommand": {
-    "eovX": 764872,
-    "eovY": 271458
-  },
-  "direction": "SW",
-  "height": 9.5
-}
-
-<> 2022-06-18T182200.201.json
-
-###
-
-GET http://localhost:8080/api/nest-boxes/all
-Accept: application/json
-
-<> 2022-06-18T182150.200.json
-
-###
-
-GET http://localhost:8080/api/nests/zoology-data
-Accept: application/json
-
-<> 2022-06-18T122408.200.json
-
-###
-
-GET http://localhost:8080/api/nests
-Accept: application/json
-
-<> 2022-06-18T122358.200.json
-
-###
-
-GET http://localhost:8080/api/nests?species=Coracias garrulus
-Accept: application/json
-
-<> 2022-06-18T122342.200.json
-
-###
-
-GET http://localhost:8080/api/nests?nest-box-number=2568&species=Corvus monedula
-Accept: application/json
-
-<> 2022-06-18T122309.200.json
-
-###
-
-GET http://localhost:8080/api/nests?nest-box-number=2568
-Accept: application/json
-
-<> 2022-06-18T122217.200.json
-
-###
-
-POST http://localhost:8080/api/nests
-Accept: application/json
-Content-Type: application/json
-
-{
-"nestBoxNumber": "2568",
-"dateOfSurvey": "2015-06-18",
-"species": "Corvus monedula",
-"numberOfNestlings": 4,
-"observer": "John Doe"
-}
-
-<> 2022-06-18T122129.201.json
-
-###
-
-POST http://localhost:8080/api/nests
-Accept: application/json
-Content-Type: application/json
-
-{
-"nestBoxNumber": "2568",
-"dateOfSurvey": "2021-06-18",
-"species": "Corvus monedula",
-"numberOfNestlings": 4,
-"observer": "John Doe"
-}
-
-<> 2022-06-18T122058.201.json
-
-###
-
-PUT http://localhost:8080/api/nest-boxes
-Accept: application/json
-Content-Type: application/json
-
-{
-  "nestBoxNumber": "1600",
-  "direction": "NE",
-  "height": 6.5
-}
-
-<> 2022-06-18T122042.400.json
-
-###
-
-POST http://localhost:8080/api/nests
-Accept: application/json
-Content-Type: application/json
-
-{
-"nestBoxNumber": "2256",
-"dateOfSurvey": "2021-06-18",
-"species": "Corvus monedula",
-"numberOfNestlings": 4,
-"observer": "John Doe"
-}
-
-<> 2022-06-18T122001.400.json
-
-###
-
-GET http://localhost:8080/api/nest-boxes/all
-
-<> 2022-06-18T120824.200.json
-
-###
-
-DELETE http://localhost:8080/api/nest-boxes?nest-box-number=1600
-
-###
-
-GET http://localhost:8080/api/nest-boxes/all
-
-<> 2022-06-18T120802.200.json
-
-###
-
-GET http://localhost:8080/api/nest-boxes?nest-box-number=1600
-
-<> 2022-06-18T120719.200.json
-
-###
-
-PUT http://localhost:8080/api/nest-boxes
-Content-Type: application/json
-
-{
-  "nestBoxNumber": "1600",
-  "direction": "NE",
-  "height": 6.5
-}
-
-<> 2022-06-18T120716.200.json
-
-###
-
-GET http://localhost:8080/api/nest-boxes?nest-box-number=1600
-
-<> 2022-06-18T120519.200.json
-
-###
-
-GET http://localhost:8080/api/nest-boxes?nest-box-number=1600
-
-<> 2022-06-18T120508.200.json
-
-###
-
-POST http://localhost:8080/api/nest-boxes
-Content-Type: application/json
-
-{
-  "nestBoxNumber": "1600",
-  "coordinatesCommand": {
-    "eovX": 764872,
-    "eovY": 271458
-  },
-  "direction": "SW",
-  "height": 9.5
-}
-
-<> 2022-06-18T120503.201.json
 
 ###
 

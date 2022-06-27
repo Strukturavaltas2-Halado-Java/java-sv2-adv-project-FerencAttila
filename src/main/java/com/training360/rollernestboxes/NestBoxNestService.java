@@ -21,6 +21,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Predicate;
@@ -60,13 +61,14 @@ public class NestBoxNestService {
     public List<ZoologyDataDto> getAllNestsAsZoologyData() {
         return nestRepository.findAll().stream()
                 .map(nest -> nestMapper.toZoologyDataDto(nest))
+                .sorted(Comparator.comparing(ZoologyDataDto::getDateOfSurvey))
                 .toList();
     }
 
     public NestBoxDto saveNestBox(NestBoxPuttingCommand command) {
         NestBox nestBox = new NestBox(command.getNestBoxNumber().strip(),
-                new Coordinates(command.getCoordinatesCommand().getEovX(),
-                        command.getCoordinatesCommand().getEovY()),
+                new Coordinates(command.getCoordinates().getEovX(),
+                        command.getCoordinates().getEovY()),
                 command.getDirection(),
                 command.getHeight());
         nestBoxRepository.save(nestBox);

@@ -26,7 +26,7 @@ public class NestBoxPuttingCommand {
     @Valid
     @NotNull(message = "Coordinates are required")
     @Schema(implementation = CoordinatesCommand.class)
-    private CoordinatesCommand coordinatesCommand;
+    private CoordinatesCommand coordinates;
 
     @Schema(description = "Direction as quarter", enumAsRef = true)
     private Quarter direction;

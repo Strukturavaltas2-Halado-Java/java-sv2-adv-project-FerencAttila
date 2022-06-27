@@ -3,8 +3,8 @@ Accept: application/json
 Content-Type:  application/json
 
 {
-  "nestBoxNumber": "1578/c",
-  "coordinatesCommand": {
+  "nestBoxNumber": "1600",
+  "coordinates": {
     "eovX": 758615,
     "eovY": 257498
   },

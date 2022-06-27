@@ -28,6 +28,6 @@ public class UpdateNestBoxCommand {
     @Min(value = 1, message = "You cannot place a roller nest box lower then 1 meter!")
     @Max(value = 10, message = "You cannot place a roller nest box higher then 10 meters!")
     @NotNull
-    @Schema(description = "Height of the nest box", example = "4.5")
+    @Schema(description = "Height of the nest box", example = "3.5")
     private double height;
 }

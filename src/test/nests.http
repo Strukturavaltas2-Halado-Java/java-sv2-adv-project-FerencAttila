@@ -17,8 +17,8 @@ Content-Type: application/json
 
 {
 "nestBoxNumber": "1600",
-"dateOfSurvey": "2017-06-18",
-"species": "Corvus monedula",
+"dateOfSurvey": "2019-07-18",
+"species": "Coracias garrulus",
 "numberOfNestlings": 4,
 "observer": "John Doe"
 }
