@@ -6,6 +6,7 @@ import com.training360.rollernestboxes.nest.dtos.SurveyCommand;
 import com.training360.rollernestboxes.nest.dtos.ZoologyDataDto;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -17,6 +18,7 @@ import java.util.Optional;
 @RestController
 @RequestMapping(value = "/api/nests")
 @AllArgsConstructor
+@Tag(name = "Operations on nests in nest boxes", description = "Save and query nests and export zoology data")
 public class NestController {
 
     private NestBoxNestService service;

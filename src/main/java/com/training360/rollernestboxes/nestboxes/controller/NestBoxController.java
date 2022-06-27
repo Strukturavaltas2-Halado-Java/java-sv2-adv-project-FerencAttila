@@ -6,6 +6,7 @@ import com.training360.rollernestboxes.nestboxes.dtos.NestBoxPuttingCommand;
 import com.training360.rollernestboxes.nestboxes.dtos.UpdateNestBoxCommand;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -16,6 +17,7 @@ import java.util.List;
 @RestController
 @RequestMapping(value = "/api/nest-boxes")
 @AllArgsConstructor
+@Tag(name = "Operations on nest boxes", description = "Save, modify, delete and query nest boxes")
 public class NestBoxController {
 
     private NestBoxNestService service;
