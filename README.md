@@ -242,11 +242,11 @@ activity: a faj aktivitása, a projekt esetében mindig "fióka fészekben"
 surveyMethod: felmérési módazertan a projekt esetében mindig "szalakóta odúellenőrzés"
 collectionMethod: gyűjtési mód, a projekt esetében mindig "vizuális"
 
-| HTTP metódus | Végpont             | Leírás                                                                                      |
-|--------------|---------------------|---------------------------------------------------------------------------------------------|
-| GET          | `/api/nests`        | lekérdezi az összes fészkelést, illetve odúszám és/vagy költő faj szerint szűr              |
-| GET          | `/api/zoology-data` | lekérdezi az összes fészkelést, a zoológiai adatbázisnak megfelelő formátumban adja vissza  |
-| POST         | `/api/nests`        | létrehoz egy fészkelést terepen gyűjtött adatok alapján                                     |                                                 |
+| HTTP metódus | Végpont             | Leírás                                                                                     |
+|--------------|---------------------|--------------------------------------------------------------------------------------------|
+| GET          | `/api/nests`        | lekérdezi az összes fészkelést, illetve odúszám és/vagy költő faj szerint szűr             |
+| GET          | `/api/zoology-data` | lekérdezi az összes fészkelést, a zoológiai adatbázisnak megfelelő formátumban adja vissza |
+| POST         | `/api/nests`        | létrehoz egy fészkelést terepen gyűjtött adatok alapján, dátum szerint emelkedő sorrendben |                                                 |
 
 Példa URL, bean validáció és mintaadatok az egyes végpontokon:
 
@@ -401,7 +401,7 @@ GET http://localhost:8080/api/nests/zoology-data
     "observer": "John Doe"
     },
     {
-    "dateOfSurvey": "2015-06-18",
+    "dateOfSurvey": "2020-06-18",
     "coordinates": {
     "eovX": 758615,
     "eovY": 257498
